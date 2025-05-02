@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Custom Journey Builder Activity</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/require.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var config = {
+                baseUrl: "js",
+            };
+
+            var dependencies = ["customActivity"];
+
+            require(config, dependencies);
+        })();
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body style="overflow: hidden;">
+    <div id="step1" class="step">
+        <div class="loader-overlay show"></div>
+        <div class="activity-loader"></div>
+        <div class="step1-left-panel">
+            <h2 class="step1-heading">Connect your PostGrid account</h2>
+            <div class="step1-input-group">
+                <label for="test-api-key">Test Api Key <span class="asterisk">*</span></label>
+                <input type="password" id="test-api-key" class="api-key" placeholder="Enter test API key" required />
+                <span class="toggle-password" id="toggle-password-test-key"><i class="fa fa-eye-slash"></i></span>
+                <span class="error-message" id="test-api-key-error" style="color: red; display: none">Missing or invalid authentication.</span>
+            </div>
+            <div class="step1-input-group">
+                <label for="live-api-key">Live Api Key</label>
+                <input type="password" id="live-api-key" class="api-key" placeholder="Enter live API key" />
+                <span class="toggle-password" id="toggle-password-live-key"><i class="fa fa-eye-slash"></i></span>
+                <span class="error-message" id="live-api-key-error" style="color: red; display: none">Missing or invalid authentication.</span>
+            </div>
+        </div>
+        <div class="step1-right-panel">
+        </div>
+    </div>
+
+    <div id="step2" class="step">
+        <div class="second-step">
+            <div class="left-box">
+                <div class="message-type-wrapper">
+                    <div class="message-label-input-wrap">
+                        <div class="section-label">Choose your message format <span class="asterisk">*</span></div>
+                        <div class="input-container">
+                            <div class="letter-radio radio-label-wrap">
+                                <input type="radio" class="radio-input step2radioBTN" id="letters" name="msgType" value = "Letters" />
+                                <label for="letters" class="radio-label">Letters</label>
+                            </div>
+                            <div class="postcard-radio radio-label-wrap">
+                                <input type="radio" class="radio-input step2radioBTN" id="postcard" name="msgType" value = "Postcards"/>
+                                <label for="postcard" class="radio-label">Postcards</label>
+                            </div>
+                            <div class="self-mailer-radio radio-label-wrap">
+                                <input type="radio" class="radio-input step2radioBTN" id="self-mailer" name="msgType" value="selfmailer"/>
+                                <label for="self-mailer" class="radio-label">Self Mailer</label>
+                            </div>
+                        </div>
+                    </div>
+                    <span id="msgType-error" class="error-message"></span>
+                </div>
+                <div class="creation-type-wrapper">
+                  <div class="creation-label-input-wrap">
+                      <div class="section-label">Choose your message design format <span class="asterisk">*</span></div>
+                      <div class="input-container">
+                          <div class="html-radio-wrap radio-label-wrap">
+                              <input type="radio" class="radio-input step2radioBTN" id="htmlId" name="createType" value="html-creation-type"/>
+                              <label for="htmlId" class="radio-label">HTML</label>
+                          </div>
+                          <div class="pdf-radio-wrap radio-label-wrap">
+                              <input type="radio" class="radio-input step2radioBTN" id="pdfId" name="createType" value="pdf-creation-type"/>
+                              <label for="pdfId" class="radio-label">PDF</label>
+                          </div>
+                          <div class="existing-template-radio-wrap radio-label-wrap">
+                              <input type="radio" class="radio-input step2radioBTN" id="extTempId" name="createType" value="template-creation-type" />
+                              <label for="extTempId" class="radio-label">Existing Template</label>
+                          </div>
+                      </div>
+                  </div>
+                  <span id="createType-error" class="error-message"></span>
+                </div>
+                <div class="card-insert-wrapper hidden">
+                    <div id="card-insert-container" class="hidden">
+                        <input type="checkbox" id="card-insert" />
+                        <label for="card-insert">Include Card Insert</label>
+                    </div>
+                    <div id="card-insert-type">
+                        <div class="section-label">Choose your card insert layout</div>
+                        <div class="input-container">
+                            <div class="single-sided-radio-wrap">
+                                <input type="radio" id="single-sided" name="cardType" value="singleSide" checked />
+                                <label for="single-sided">Single-sided</label>
+                            </div>
+                            <div class="double-sided-radio-wrap">
+                                <input type="radio" id="double-sided" name="cardType"  value="doubleSide"/>
+                                <label for="double-sided">Double-sided</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="creation-type-wrapper card-insert-creation-type-wrapper">
+                      <div class="creation-label-input-wrap card-insert-label-input-wrap">
+                          <div class="section-label">Choose your card insert design format <span class="asterisk">*</span></div>
+                          <div class="input-container">
+                              <div class="html-radio-wrap radio-label-wrap">
+                                  <input type="radio" class="radio-input step2radioBTN" id="card-insert-html" name="cardInsertType" value="html" checked/>
+                                  <label for="card-insert-html" class="radio-label">HTML</label>
+                              </div>
+                              <div class="pdf-radio-wrap radio-label-wrap">
+                                  <input type="radio" class="radio-input step2radioBTN" id="card-insert-pdf" name="cardInsertType" value="pdf"/>
+                                  <label for="card-insert-pdf" class="radio-label">PDF</label>
+                              </div>
+                              <div class="existing-template-radio-wrap radio-label-wrap">
+                                  <input type="radio" class="radio-input step2radioBTN" id="card-insert-existing-template" name="cardInsertType" value="template"/>
+                                  <label for="card-insert-existing-template" class="radio-label">Existing Template</label>
+                              </div>
+                          </div>
+                      </div>
+                      <span id="cardInsertType-error" class="error-message"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="right-box">
+                <div class="input-container align-right">
+                    <label class="test-to-live-switch">
+                        <input type="checkbox" />
+                        <span class="test-to-live-slider round"></span>
+                    </label>
+                    <label for="testMode" class="slider-label">Live Mode</label>
+                </div>
+            </div>
+            <p id="liveModeError" style="color: red; display: none; font-size: 16px; margin-top: 30px;">
+                Live API key is required to enable live mode.
+            </p>
+        </div>
+    </div>
+
+    <div id="step3" class="step">
+        <div id="postcardScreen" class="Postcards">
+            <div class="screen-1 screen">
+                <div class="container spacer html-creation-type">
+                    <div class="html-screen-wrapper">
+                        <h3 class="section-label">Postcard - HTML</h3>
+                        <div class="outer-input-fields">
+                            <div class="input-fields">
+                                <div class="input-box">
+                                    <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
+                                    <input type="text" class="input-field description" id="postcardDescription" name="description" />
+                                    <span class="error-msg">The input value is missing</span>
+                                </div>
+                                <div class="input-box">
+                                    <label for="mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                                    <select class="input-field mailing-class" id="mailingClass" name="mailingClass">
+                                        <option value="first_class" selected>
+                                            First Class (7 - 10 business days)
+                                        </option>
+                                        <option value="standard_class">
+                                            Standard Class (10 - 14 business days)
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="html-size">
+                            <div class="input-label-radio">Size <span class="asterisk">*</span></div>
+                            <div class="size-radio-buttons-wrap">
+                                <div class="radio-buttons">
+                                    <label class="radio-label size-radio-label">
+                                        <input type="radio" class="radio-input"  name="HtmlSize" value="6x4"
+                                            checked />
+                                        <span>6x4</span>
+                                    </label>
+                                    <label class="radio-label size-radio-label">
+                                        <input type="radio" class="radio-input" name="HtmlSize" value="9x6" />
+                                        <span>9x6</span>
+                                    </label>
+                                    <label class="radio-label size-radio-label">
+                                        <input type="radio" class="radio-input" name="HtmlSize"
+                                            value="11x6" />
+                                        <span>11x6</span>
+                                    </label>
+                                </div>
+                                <span class="error-msg">Please Select at least one size.</span>
+                            </div>
+                        </div>
+                        <div class="express-delivery">
+                            <div class="checkbox-wrapper">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
+                                    <span>Express Delivery</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="html-editor">
+                        <div class="html-btn-wrap">
+                            <button type="button" class="btn btn-light html-btn-front show">
+                                Front
+                            </button>
+                            <button type="button" class="btn btn-light html-btn-back">
+                                Back
+                            </button>
+                        </div>
+                        <textarea class="html-editor-front show html-area" data-btn-label="Front"></textarea>
+                        <textarea class="html-editor-back html-area" data-btn-label="Back"></textarea>
+                        <span class="error-msg">Please enter required field</span>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-2 screen">
+                <div class="spacer">
+                    <div class="pdf-container postcard-pdf-container pdf-creation-type">
+                        <h3 class="section-label">Postcard - PDF</h3>
+                        <div class="input-fields">
+                            <div class="input-box">
+                                <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
+                                <input type="text" class="input-field description" id="postcardPdfDescription" name="description" />
+                                <span class="error-msg">Please enter required field</span>
+                            </div>
+                            <div class="input-box">
+                                <label for="mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                                <select class="input-field mailing-class" id="mailingClass" name="mailingClass">
+                                    <option value="first_class" selected>
+                                        First Class (7 - 10 business days)
+                                    </option>
+                                    <option value="standard_class">
+                                        Standard Class (10 - 14 business days)
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="input-box">
+                                <label for="pdfLink" class="input-label">PDF URL <span class="asterisk">*</span></label>
+                                <input type="text" class="input-field pdfLink" id="postcardPdfLink" name="pdfLink" />
+                                <span class="error-msg">Please enter required field</span>
+                            </div>
+                        </div>
+                        <div class="pdf-size postcard-pdf-size">
+                            <div class="input-label-radio">Size <span class="asterisk">*</span></div>
+                            <div class="size-radio-buttons-wrap">
+                                <div class="radio-buttons">
+                                    <label class="radio-label size-radio-label">
+                                        <input type="radio" class="radio-input"  name="Postcards-pdf-size" value="6x4" data-dimentions="6.25x4.25"
+                                            checked />
+                                        <span>6x4</span>
+                                    </label>
+                                    <label class="radio-label size-radio-label">
+                                        <input type="radio" class="radio-input" name="Postcards-pdf-size" value="9x6" data-dimentions="9.25x6.25"/>
+                                        <span>9x6</span>
+                                    </label>
+                                    <label class="radio-label size-radio-label">
+                                        <input type="radio" class="radio-input" name="Postcards-pdf-size"
+                                            value="11x6" data-dimentions="11.25x6.25"/>
+                                        <span>11x6</span>
+                                    </label>
+                                </div>
+                                <span class="error-msg">Please Select at least one size.</span>
+                            </div>
+                        </div>
+                        <div class="express-delivery">
+                            <div class="checkbox-wrapper">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery" />
+                                    <span>Express Delivery</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="screen-3 screen">
+                <div class="spacer template-creation-type">
+                    <div class="section-label">Postcard - Existing Template</div>
+                    <div class="existing-template-details">
+                        <div class="input-box">
+                            <label for="description3" class="input-label">Description <span class="asterisk">*</span></label>
+                            <input type="text" class="input-field description" id="description3" name="description3">
+                            <span class="error-msg">Please enter required field</span>
+                        </div>
+                        <div class="input-box">
+                            <label for="mailingClass3" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                            <select class="input-field mailing-class" id="mailingClass3" name="mailingClass3">
+                                <option value="first_class" selected>First Class (7 - 10 business days)</option>
+                                <option value="standard_class">Standard Class (10 - 14 business days)</option>
+                            </select>
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="input-box">
+                            <label for="front-template-input" class="input-label">Front Template <span class="asterisk">*</span></label>
+                            <div class="mapping-dropdown">
+                                <div class="template-dropdown-wrap">
+                                    <input type="text" id="front-template-input" class="frontTemplate" placeholder="Search or Enter Template"
+                                        autocomplete="off" aria-describedby="frontTemplateList" aria-haspopup="listbox"
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter front template</span>
+                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                </div>
+                                <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                    aria-labelledby="front-template-input"></div>
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+                        <div class="input-box">
+                            <label for="back-template-input" class="input-label">Back Template <span class="asterisk">*</span></label>
+                            <div class="mapping-dropdown">
+                                <div class="template-dropdown-wrap">
+                                    <input type="text" id="back-template-input" class="backTemplate" placeholder="Search or Enter Template"
+                                        autocomplete="off" aria-describedby="backTemplateList" aria-haspopup="listbox"
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter back template</span>
+                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                </div>
+                                <div id="backTemplateList" class="dropdown-options backTemplateList" role="listbox"
+                                    aria-labelledby="back-template-input"></div>
+                                <span class="error-message"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="existingTemplate-size">
+                      <div class="input-label-radio">Size <span class="asterisk">*</span></div>
+                      <div class="radio-buttons width-50">
+                          <label class="radio-label size-radio-label">
+                              <input type="radio" class="radio-input"  name="size" value="6x4" checked>
+                              6x4
+                          </label>
+                          <label class="radio-label size-radio-label">
+                              <input type="radio" class="radio-input" name="size" value="9x6">
+                              9x6
+                          </label>
+                          <label class="radio-label size-radio-label">
+                              <input type="radio" class="radio-input" name="size" value="11x6">
+                              11x6
+                          </label>
+                          <span class="error-message"></span>
+                      </div>
+                    </div>
+                    <div class="checkboxes express-delivery">
+                        <div class="five-checkboxes">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery">
+                                Express Delivery
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="selfMailerScreen" class="selfmailer">
+          <div class="screen-1 screen">
+            <div class="container spacer html-creation-type">
+                <div class="html-screen-wrapper">
+                    <h3 class="section-label">Self Mailer - HTML</h3>
+                    <div class="outer-input-fields">
+                        <div class="input-fields">
+                            <div class="input-box">
+                                <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
+                                <input type="text" class="input-field description" id="selfMailerHtmlDescription" name="description" />
+                                <span class="error-msg">The input value is missing</span>
+                            </div>
+                            <div class="input-box">
+                                <label for="mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                                <select class="input-field mailing-class" id="mailingClass" name="mailingClass">
+                                    <option value="first_class" selected>
+                                        First Class (7 - 10 business days)
+                                    </option>
+                                    <option value="standard_class">
+                                        Standard Class (10 - 14 business days)
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="html-size">
+                        <div class="input-label-radio">Size <span class="asterisk">*</span></div>
+                        <div class="size-radio-buttons-wrap">
+                            <div class="radio-buttons">
+                                <label class="radio-label size-radio-label">
+                                    <input type="radio" class="radio-input"  name="SelfMailerHtmlSize" value="8.5x11_bifold" data-dimentions="8.625x11.125"
+                                        checked />
+                                    <span>8.5x11(Bifold)</span>
+                                </label>
+                                <label class="radio-label size-radio-label">
+                                    <input type="radio" class="radio-input" name="SelfMailerHtmlSize" value="8.5x11_trifold" data-dimentions="8.625x11.125" />
+                                    <span>8.5x11(Trifold)</span>
+                                </label>
+                                <label class="radio-label size-radio-label">
+                                    <input type="radio" class="radio-input" name="SelfMailerHtmlSize"
+                                    value="9.5x16_trifold" data-dimentions="9.625x16.125" />
+                                      <span>9.5x16(Trifold)</span>
+                                </label>
+                            </div>
+                            <span class="error-msg">Please Select at least one size.</span>
+                        </div>
+                    </div>
+                    <div class="express-delivery">
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
+                                <span>Express Delivery</span>
+                            </label>
+                        </div>
+                    </div>
+                  </div>
+                <div class="html-editor">
+                    <div class="html-btn-wrap">
+                        <button type="button" class="btn btn-light html-btn-front show">
+                          Inside
+                        </button>
+                        <button type="button" class="btn btn-light html-btn-back">
+                          Outside
+                        </button>
+                    </div>
+                    <textarea class="html-editor-front show html-area" data-btn-label="Inside"></textarea>
+                    <textarea class="html-editor-back html-area" data-btn-label="Outside"></textarea>
+                    <span class="error-msg">Please enter required field</span>
+                </div>
+            </div>
+          </div>
+          <div class="screen-2 screen">
+            <div class="spacer">
+              <div class="pdf-container self-mailer-pdf-container pdf-creation-type">
+                  <h3 class="section-label">Self Mailer - PDF</h3>
+                  <div class="input-fields">
+                      <div class="input-box">
+                          <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
+                          <input type="text" class="input-field description" id="self-mailer-pdf-description" name="self-mailer-pdf-description" />
+                          <span class="error-msg">Please enter required field</span>
+                      </div>
+                      <div class="input-box">
+                          <label for="mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                          <select class="input-field mailing-class" id="self-mailer-pdf-mailing-class" name="self-mailer-pdf-mailing-class">
+                              <option value="first_class" selected>
+                                  First Class (7 - 10 business days)
+                              </option>
+                              <option value="standard_class">
+                                  Standard Class (10 - 14 business days)
+                              </option>
+                          </select>
+                      </div>
+                      <div class="input-box">
+                        <label for="pdfLink" class="input-label">PDF URL <span class="asterisk">*</span></label>
+                        <input type="text" class="input-field pdfLink" id="selfMailerPdfLink" name="pdfLink" />
+                        <span class="error-msg">Please enter required field</span>
+                    </div>
+                  </div>
+                  <div class="pdf-size">
+                      <div class="input-label-radio">Size <span class="asterisk">*</span></div>
+                      <div class="size-radio-buttons-wrap">
+                          <div class="radio-buttons">
+                              <label class="radio-label size-radio-label">
+                                  <input type="radio" class="radio-input" name="selfmailer-pdf-size" value="8.5x11_bifold" data-dimentions="8.625x11.125"
+                                      checked />
+                                  <span>8.5x11(Bifold)</span>
+                              </label>
+                              <label class="radio-label size-radio-label">
+                                  <input type="radio" class="radio-input" name="selfmailer-pdf-size" value="8.5x11_trifold" data-dimentions="8.625x11.125"/>
+                                  <span>8.5x11(Trifold)</span>
+                              </label>
+                              <label class="radio-label size-radio-label">
+                                  <input type="radio" class="radio-input" name="selfmailer-pdf-size" value="9.5x16_trifold" data-dimentions="9.625x16.125"/>
+                                  <span>9.5x16(Trifold)</span>
+                              </label>
+                          </div>
+                          <span class="error-msg">Please Select at least one size.</span>
+                      </div>
+                  </div>
+                  <div class="express-delivery">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery" />
+                              <span>Express Delivery</span>
+                          </label>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="screen-3 screen">
+              <div class="spacer template-creation-type">
+                  <div class="section-label">Self Mailer - Existing Template</div>
+                  <div class="existing-template-details">
+                      <div class="input-box">
+                          <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
+                          <input type="text" class="input-field description" id="self-mailer-existing-description" name="self-mailer-existing-description" />
+                          <span class="error-msg">Please enter required field</span>
+                      </div>
+                      <div class="input-box">
+                          <label for="mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                          <select class="input-field mailing-class" id="self-mailer-existing-template-mailing-class" name="self-mailer-existing-template-mailing-class">
+                              <option value="first_class" selected>
+                                  First Class (7 - 10 business days)
+                              </option>
+                              <option value="standard_class">
+                                  Standard Class (10 - 14 business days)
+                              </option>
+                          </select>
+                      </div>
+                      <div class="input-box">
+                          <label for="selfMailer-insideTemplateInput" class="input-label">Inside Template <span class="asterisk">*</span></label>
+                          <div class="mapping-dropdown">
+                              <div class="template-dropdown-wrap">
+                                  <input type="text" id="selfMailer-insideTemplateInput" class="frontTemplate selfMailer-insideTemplate"  placeholder="Search or Enter Template"
+                                      autocomplete="off" aria-describedby="selfMailer-insideTemplateList" aria-haspopup="listbox"
+                                      aria-expanded="false" />
+                                  <span class="error-msg">Please enter inside template</span>
+                                  <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                              </div>
+                              <div id="selfMailer-insideTemplateList" class="dropdown-options frontTemplateList selfMailer-insideTemplateList" role="listbox"
+                                  aria-labelledby="selfMailer-insideTemplateInput"></div>
+                              <span class="error-message"></span>
+                          </div>
+                      </div>
+                      <div class="input-box">
+                          <label for="selfMailer-outsideTemplateInput" class="input-label">Outside Template <span class="asterisk">*</span></label>
+                          <div class="mapping-dropdown">
+                              <div class="template-dropdown-wrap">
+                                  <input type="text" id="selfMailer-outsideTemplateInput" class="backTemplate selfMailer-outsideTemplate"  placeholder="Search or Enter Template"
+                                      autocomplete="off" aria-describedby="selfMailer-outsideTemplateList" aria-haspopup="listbox"
+                                      aria-expanded="false" />
+                                  <span class="error-msg">Please enter outside template</span>
+                                  <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                              </div>
+                              <div id="selfMailer-outsideTemplateList" class="dropdown-options backTemplateList selfMailer-outsideTemplateList" role="listbox"
+                                  aria-labelledby="selfMailer-outsideTemplateInput"></div>
+                              <span class="error-message"></span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="existingTemplate-size">
+                    <div class="input-label-radio">Size <span class="asterisk">*</span></div>
+                    <div class="radio-buttons">
+                        <label class="radio-label size-radio-label">
+                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_bifold" data-dimentions="6.25x4.25"
+                                checked />
+                            <span>8.5x11(Bifold)</span>
+                        </label>
+                        <label class="radio-label size-radio-label">
+                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="8.5x11_trifold" data-dimentions="9.25x6.25"/>
+                            <span>8.5x11(Trifold)</span>
+                        </label>
+                        <label class="radio-label size-radio-label">
+                            <input type="radio" class="radio-input" name="SelfMailer-existing-template-size" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
+                            <span>9.5x16(Trifold)</span>
+                        </label>
+                    </div>
+                  </div>
+                  <div class="express-delivery">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery" />
+                              <span>Express Delivery</span>
+                          </label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div id="TrifoldScreen" class="trifold">
+          <div class="screen-1 screen">
+            <div class="container spacer html-creation-type">
+                <div class="html-screen-wrapper">
+                    <h3 class="section-label">Self Mailer with Card Insert - HTML</h3>
+                    <div class="outer-input-fields">
+                        <div class="input-fields">
+                            <div class="input-box">
+                                <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
+                                <input type="text" class="input-field description" name="description" />
+                                <span class="error-msg">The input value is missing</span>
+                            </div>
+                            <div class="input-box">
+                                <label for="mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                                <select class="input-field mailing-class" name="mailingClass">
+                                    <option value="first_class" selected>
+                                        First Class (7 - 10 business days)
+                                    </option>
+                                    <option value="standard_class">
+                                        Standard Class (10 - 14 business days)
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="html-size">
+                        <div class="input-label-radio">Size <span class="asterisk">*</span></div>
+                        <div class="size-radio-buttons-wrap">
+                            <div class="radio-buttons">
+                                <label class="radio-label size-radio-label">
+                                    <input type="radio" class="radio-input" id="nine-six" name="TrifoldHtmlSize" value="8.5x11_trifold" checked />
+                                    <span>8.5x11(Trifold)</span>
+                                </label>
+                                <label class="radio-label size-radio-label">
+                                    <input type="radio" class="radio-input" id="eleven-eight" name="TrifoldHtmlSize"
+                                        value="9.5x16_trifold" />
+                                    <span>9.5x16(Trifold)</span>
+                                </label> 
+                            </div>
+                            <span class="error-msg">Please Select at least one size.</span>
+                        </div>
+                    </div>
+                    <div class="html-card-size cardSize">
+                        <div class="input-label-radio"><b>Card Size</b> <span class="asterisk">*</span></div>
+                        <div class="size-radio-buttons-wrap">
+                            <div class="radio-buttons">
+                                <label class="radio-label size-radio-label">
+                                    <input type="radio" class="radio-input" id="six-four" name="HtmlCardSize" value="7.75x4.5"
+                                        checked />
+                                    <span>7.75 x 4.5</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                <div class="html-editor">
+                    <div class="html-btn-wrap">
+                        <button type="button" class="btn btn-light html-btn-front show">
+                          Inside
+                        </button>
+                        <button type="button" class="btn btn-light html-btn-back">
+                          Outside
+                        </button>
+                        <button type="button" class="btn btn-light html-btn-card-front">
+                          Card Insert
+                        </button>
+                        <button type="button" class="btn btn-light html-btn-card-back singleSided-hide">
+                        Card Outside
+                        </button>
+                    </div>
+                    <textarea class="html-editor-front show html-area" data-btn-label="Inside"></textarea>
+                    <textarea class="html-editor-back html-area" data-btn-label="Outside"></textarea>
+                    <textarea class="html-editor-front-card-insert html-area" data-btn-label="Card Inside"></textarea>
+                    <textarea class="html-editor-back-card-insert html-area" data-btn-label="Card Outside"></textarea>
+                    <span class="error-msg">Please enter required field</span>
+                </div>
+            </div>
+          </div>
+          <div class="screen-2 screen">
+            <div class="container spacer pdf-creation-type">
+              <div class="html-screen-wrapper">
+                  <h3 class="section-label">Self Mailer with Card Insert - PDF</h3>
+                  <div class="outer-input-fields">
+                      <div class="input-fields">
+                          <div class="input-box">
+                              <label for="description" class="input-label">Description <span class="asterisk">*</span></label>
+                              <input type="text" class="input-field description" id="trifoldPdfDescription" name="description" />
+                              <span class="error-msg">The input value is missing</span>
+                          </div>
+                          <div class="input-box">
+                              <label for="mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                              <select class="input-field mailing-class" id="mailingClass" name="mailingClass">
+                                  <option value="first_class" selected>
+                                      First Class (7 - 10 business days)
+                                  </option>
+                                  <option value="standard_class">
+                                      Standard Class (10 - 14 business days)
+                                  </option>
+                              </select>
+                          </div>
+                          <div class="input-box">
+                            <label for="pdfLink" class="input-label">PDF Link <span class="asterisk">*</span></label>
+                            <input type="text" class="input-field pdfLink" id="trifoldPdfLink" name="pdfLink" />
+                            <span class="error-msg">The input value is missing</span>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="pdf-size">
+                      <div class="input-label-radio">Size <span class="asterisk">*</span></div>
+                      <div class="size-radio-buttons-wrap">
+                          <div class="radio-buttons">
+                              <label class="radio-label size-radio-label">
+                                  <input type="radio" class="radio-input" name="TrifoldPDFSize" value="8.5x11_trifold" data-dimentions="8.625x11.125" checked/>
+                                  <span>8.5x11(Trifold)</span>
+                              </label>
+                              <label class="radio-label size-radio-label">
+                                  <input type="radio" class="radio-input" name="TrifoldPDFSize"
+                                  value="9.5x16_trifold" data-dimentions="9.625x16.125" />
+                                    <span>9.5x16(Trifold)</span>
+                              </label>
+                          </div>
+                          <span class="error-msg">Please Select at least one size.</span>
+                      </div>
+                  </div>
+                  <div class="pdf-card-size cardSize">
+                      <div class="input-label-radio"><b>Card Size</b> <span class="asterisk">*</span></div>
+                      <div class="size-radio-buttons-wrap">
+                          <div class="radio-buttons">
+                              <label class="radio-label size-radio-label">
+                                  <input type="radio" class="radio-input" name="TrifoldPdfCardSize" value="7.75x4.5" checked/>
+                                  <span>7.75x4.5</span>
+                              </label>
+                          </div>
+                          <span class="error-msg">Please Select at least one size.</span>
+                      </div>
+                  </div>
+              </div>
+              <div class="html-editor">
+                  <div class="html-btn-wrap">
+                      <button type="button" class="btn btn-light html-btn-front show">
+                        Inside
+                      </button>
+                      <button type="button" class="btn btn-light html-btn-back">
+                        Outside
+                      </button>
+                  </div>
+                  <textarea class="html-editor-front html-area show" data-btn-label="Inside"></textarea>
+                  <textarea class="html-editor-back html-area" data-btn-label="Outside"></textarea>
+                  <span class="error-msg">Please enter required field</span>
+              </div>
+            </div>
+          </div>
+          <div class="screen-3 screen">
+            <div class="container spacer template-creation-type">
+              <div class="html-screen-wrapper">
+                <div class="section-label">Self Mailer with Card Insert - Existing Template</div>
+                <div class="outer-input-fields">
+                  <div class="input-fields">
+                  <div class="input-box">
+                      <label for="trifold-existing-description" class="input-label">Description <span class="asterisk">*</span></label>
+                      <input type="text" class="input-field description" id="trifold-existing-description" name="trifold-existing-description" />
+                      <span class="error-msg">Please enter required field</span>
+                  </div>
+                  <div class="input-box">
+                      <label for="mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                      <select class="input-field mailing-class" id="self-mailer-existing-template-mailing-class" name="self-mailer-existing-template-mailing-class">
+                          <option value="first_class" selected>
+                              First Class (7 - 10 business days)
+                          </option>
+                          <option value="standard_class">
+                              Standard Class (10 - 14 business days)
+                          </option>
+                      </select>
+                  </div>
+                    <div class="input-box singleSide">
+                      <label for="selfMailer-insideTemplateInput" class="input-label">Template <span class="asterisk">*</span></label>
+                      <div class="mapping-dropdown">
+                          <div class="template-dropdown-wrap">
+                              <input type="text" id="selfMailer-insideTemplateInput" class="singleSideTemplate selfMailer-insideTemplate"  placeholder="Search or Enter Template"
+                                  autocomplete="off" aria-describedby="selfMailer-insideTemplateList" aria-haspopup="listbox"
+                                  aria-expanded="false" />
+                              <span class="error-msg">Please enter template</span>
+                              <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                          </div>
+                          <div id="selfMailer-insideTemplateList" class="dropdown-options singleSideTemplateList selfMailer-insideTemplateList" role="listbox"
+                              aria-labelledby="selfMailer-insideTemplateInput"></div>
+                          <span class="error-message"></span>
+                      </div>
+                  </div>
+                    <div class="input-box doubleSide">
+                        <label for="selfMailer-insideTemplateInput" class="input-label">Inside Template <span class="asterisk">*</span></label>
+                        <div class="mapping-dropdown">
+                            <div class="template-dropdown-wrap">
+                                <input type="text" id="selfMailer-insideTemplateInput" class="frontTemplate selfMailer-insideTemplate"  placeholder="Search or Enter Template"
+                                    autocomplete="off" aria-describedby="selfMailer-insideTemplateList" aria-haspopup="listbox"
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter inside template</span>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="selfMailer-insideTemplateList" class="dropdown-options frontTemplateList selfMailer-insideTemplateList" role="listbox"
+                                aria-labelledby="selfMailer-insideTemplateInput"></div>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+                    <div class="input-box doubleSide">
+                        <label for="trifold-outsideTemplateInput" class="input-label">Outside Template <span class="asterisk">*</span></label>
+                        <div class="mapping-dropdown">
+                            <div class="template-dropdown-wrap">
+                                <input type="text" id="trifold-outsideTemplateInput" class="backTemplate trifold-outsideTemplate"  placeholder="Search or Enter Template"
+                                    autocomplete="off" aria-describedby="selfMailer-outsideTemplateList" aria-haspopup="listbox"
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter outside template</span>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="trifold-outsideTemplateList" class="dropdown-options backTemplateList trifold-outsideTemplateList" role="listbox"
+                                aria-labelledby="trifold-outsideTemplateInput"></div>
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="existingTemplate-size">
+                    <div class="input-label-radio">Size <span class="asterisk">*</span></div>
+                    <div class="radio-buttons">
+                        <label class="radio-label size-radio-label doubleSideSize">
+                            <input type="radio" class="radio-input" name="trifold-existing-template-size" value="8.5x11_trifold" data-dimentions="9.25x6.25" checked/>
+                            <span>8.5x11(Trifold)</span>
+                        </label>
+                        <label class="radio-label size-radio-label doubleSideSize">
+                            <input type="radio" class="radio-input" name="trifold-existing-template-size" value="9.5x16_trifold" data-dimentions="11.25x6.25"/>
+                            <span>9.5x16(Trifold)</span>
+                        </label>
+                    </div>
+                  </div>
+                  <div class="Template-card-size cardSize">
+                    <div class="input-label-radio"><b>Card Size</b> <span class="asterisk">*</span></div>
+                    <div class="size-radio-buttons-wrap">
+                        <div class="radio-buttons">
+                            <label class="radio-label size-radio-label">
+                                <input type="radio" class="radio-input" name="TrifoldTemplateCardSize" value="7.75x4.5" checked/>
+                                <span>7.75x4.5</span>
+                            </label>
+                        </div>
+                        <span class="error-msg">Please Select at least one size.</span>
+                    </div>
+                </div>
+              </div>
+              <div class="html-editor">
+                <div class="html-btn-wrap">
+                    <button type="button" class="btn btn-light html-btn-front show">
+                      Inside
+                    </button>
+                    <button type="button" class="btn btn-light html-btn-back">
+                      Outside
+                    </button>
+                </div>
+                <textarea class="html-editor-front html-area show" data-btn-label="Inside"></textarea>
+                <textarea class="html-editor-back html-area" data-btn-label="Outside"></textarea>
+                <span class="error-msg">Please enter required field</span>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <div id="letter-screen" class="Letters">
+          <div class="screen-1 screen">
+            <div class="container spacer html-creation-type">
+              <div class="html-screen-wrapper">
+                <h3 class="section-label">Letters - HTML</h3>
+                <div class="outer-input-fields">
+                    <div class="input-fields">
+                        <div class="input-box">
+                            <label for="letter-html-description" class="input-label">Description <span class="asterisk">*</span></label>
+                            <input type="text" class="input-field description" id="letter-html-description" name="description" />
+                            <span class="error-msg">The input value is missing</span>
+                        </div>
+                        <div class="input-box">
+                            <label for="letter-html-mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                            <select class="input-field mailing-class" id="letter-html-mailingClass" name="mailingClass">
+                                <option value="first_class" selected>
+                                    First Class (7 - 10 business days)
+                                </option>
+                                <option value="standard_class">
+                                    Standard Class (10 - 14 business days)
+                                </option>
+                            </select>
+                        </div>
+                        <div class="input-box">
+                            <label for="letter-html-extra-service" class="input-label">Extra Service</label>
+                            <div class="mapping-dropdown">
+                              <div class="extra-service-dropdown-wrap">
+                                  <input type="text" id="letter-html-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
+                                  <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                              </div>
+                              <div id="extra-service-list" class="dropdown-options extra-service-list">
+                                <li class="dropdown-item" data-id="">Select Extra Service</li>
+                                <li class="dropdown-item" data-id="registered">Registered Mail</li>
+                                <li class="dropdown-item" data-id="certified">Certified</li>
+                                <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="input-box">
+                          <label for="letter-html-return-envelope-input" class="input-label">Return Envelope</label>
+                          <div class="mapping-dropdown">
+                              <div class="return-envelope-dropdown-wrap">
+                                  <input type="text" id="letter-html-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
+                                      autocomplete="off" aria-describedby="returnEnvelopeList" aria-haspopup="listbox" data-id=""
+                                      aria-expanded="false" />
+                                  <span class="error-msg">Please enter return envelope</span>
+                                  <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                              </div>
+                              <div id="returnEnvelopeList" class="dropdown-options returnEnvelopeList" role="listbox"
+                                  aria-labelledby="return-envelope-input"></div>
+                              <span class="error-message"></span>
+                          </div>
+                        </div>
+                        <div class="input-box">
+                          <label for="letter-html-envelope-type" class="input-label">Envelope Type</label>
+                          <div class="mapping-dropdown">
+                            <div class="envelope-type-dropdown-wrap">
+                                <input type="text" id="letter-html-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window" readonly/>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="envelope-type-list" class="dropdown-options envelope-type-list">
+                              <li class="dropdown-item" data-id="">Select Envelope Type</li>
+                              <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
+                              <li class="dropdown-item" data-id="flat">Flat Mailer</li>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkboxes-container">
+                  <div class="color checkbox-wrap">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input color-input" name="color"/>
+                              <span>Color</span>
+                          </label>
+                      </div>
+                  </div>
+                  <div class="perforate-first-page checkbox-wrap">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input preforate-first-page-input" name="perforateFirstPage"/>
+                              <span>Perforate First Page</span>
+                          </label>
+                      </div>
+                  </div>
+                  <div class="express-delivery checkbox-wrap">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
+                              <span>Express Delivery</span>
+                          </label>
+                      </div>
+                  </div>
+                  <div class="double-sided checkbox-wrap">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
+                              <span>Double Sided</span>
+                          </label>
+                      </div>
+                  </div>
+                  <div class="insert-blank-page checkbox-wrap">
+                      <div class="checkbox-wrapper">
+                          <label class="checkbox-label">
+                              <input type="checkbox" class="checkbox-input insert-blank-page-input" name="insertBlankPage"/>
+                              <span>Insert Blank Page for Address</span>
+                          </label>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="html-editor">
+                  <div class="html-btn-wrap">
+                      <button type="button" class="btn btn-light html-btn-front show">
+                          HTML
+                      </button>
+                  </div>
+                  <textarea class="html-editor-front show html-area" data-btn-label="HTML"></textarea>
+                  <span class="error-msg">Please enter required field</span>
+              </div>
+            </div>
+          </div>
+          <div class="screen-2 screen">
+            <div class="spacer">
+              <div class="pdf-container letter-pdf-container pdf-creation-type">
+                  <h3 class="section-label">Letters - PDF</h3>
+                  <div class="letter-pdf-fields">
+                    <div class="input-fields">
+                      <div class="input-box">
+                          <label for="letter-pdf-description" class="input-label">Description <span class="asterisk">*</span></label>
+                          <input type="text" class="input-field description" id="letter-pdf-description" name="description" />
+                          <span class="error-msg">Please enter required field</span>
+                      </div>
+                      <div class="input-box">
+                          <label for="letter-pdf-mailingClass" class="input-label">Mailing Class<span class="asterisk">*</span></label>
+                          <select class="input-field mailing-class" id="letter-pdf-mailingClass" name="mailingClass">
+                              <option value="first_class" selected>
+                                  First Class (7 - 10 business days)
+                              </option>
+                              <option value="standard_class">
+                                  Standard Class (10 - 14 business days)
+                              </option>
+                          </select>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-pdf-extra-service" class="input-label">Extra Service</label>
+                        <div class="mapping-dropdown">
+                          <div class="extra-service-dropdown-wrap">
+                              <input type="text" id="letter-pdf-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
+                              <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                          </div>
+                          <div id="extra-service-list" class="dropdown-options extra-service-list">
+                            <li class="dropdown-item" data-id="">Select Extra Service</li>
+                            <li class="dropdown-item" data-id="registered">Registered Mail</li>
+                            <li class="dropdown-item" data-id="certified">Certified</li>
+                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-pdf-return-envelope-input" class="input-label">Return Envelope</label>
+                        <div class="mapping-dropdown">
+                            <div class="return-envelope-dropdown-wrap">
+                                <input type="text" id="letter-pdf-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
+                                    autocomplete="off" aria-describedby="returnEnvelopeList" aria-haspopup="listbox" data-id=""
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter return envelope</span>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="returnEnvelopeList" class="dropdown-options returnEnvelopeList" role="listbox"
+                                aria-labelledby="return-envelope-input"></div>
+                            <span class="error-message"></span>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-pdf-envelope-type" class="input-label">Envelope Type</label>
+                        <div class="mapping-dropdown">
+                          <div class="envelope-type-dropdown-wrap">
+                              <input type="text" id="letter-pdf-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window" readonly/>
+                              <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                          </div>
+                          <div id="envelope-type-list" class="dropdown-options envelope-type-list">
+                            <li class="dropdown-item" data-id="">Select Envelope Type</li>
+                            <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
+                            <li class="dropdown-item" data-id="flat">Flat Mailer</li>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                          <label for="letter-pdf-pdfLink" class="input-label">PDF URL <span class="asterisk">*</span></label>
+                          <input type="text" class="input-field pdfLink" id="letter-pdf-pdfLink" name="pdfLink" />
+                          <span class="error-msg">Please enter required field</span>
+                      </div>
+                    </div>
+                    <div class="checkboxes-container">
+                      <div class="color checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input color-input" name="color"/>
+                                  <span>Color</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="perforate-first-page checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input preforate-first-page-input" name="perforateFirstPage"/>
+                                  <span>Perforate First Page</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="express-delivery checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
+                                  <span>Express Delivery</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="double-sided checkbox-wrap">
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
+                                <span>Double Sided</span>
+                            </label>
+                        </div>
+                      </div>
+                      <div class="insert-blank-page checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input insert-blank-page-input" name="insertBlankPage"/>
+                                  <span>Insert Blank Page for Address</span>
+                              </label>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="screen-3 screen">
+            <div class="spacer">
+              <div class="template-container letter-template-container template-creation-type">
+                  <h3 class="section-label">Letters - Existing Template</h3>
+                  <div class="letter-template-fields">
+                    <div class="existing-template-details">
+                      <div class="input-box">
+                          <label for="letter-template-description" class="input-label">Description <span class="asterisk">*</span></label>
+                          <input type="text" class="input-field description" id="letter-template-description" name="description" />
+                          <span class="error-msg">Please enter required field</span>
+                      </div>
+                      <div class="input-box">
+                          <label for="letter-template-mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                          <select class="input-field mailing-class" id="letter-template-mailingClass" name="mailingClass">
+                              <option value="first_class" selected>
+                                  First Class (7 - 10 business days)
+                              </option>
+                              <option value="standard_class">
+                                  Standard Class (10 - 14 business days)
+                              </option>
+                          </select>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-template-extra-service" class="input-label">Extra Service</label>
+                        <div class="mapping-dropdown">
+                          <div class="extra-service-dropdown-wrap">
+                              <input type="text" id="letter-template-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
+                              <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                          </div>
+                          <div id="extra-service-list" class="dropdown-options extra-service-list">
+                            <li class="dropdown-item" data-id="">Select Extra Service</li>
+                            <li class="dropdown-item" data-id="registered">Registered Mail</li>
+                            <li class="dropdown-item" data-id="certified">Certified</li>
+                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-template-return-envelope-input" class="input-label">Return Envelope</label>
+                        <div class="mapping-dropdown">
+                            <div class="return-envelope-dropdown-wrap">
+                                <input type="text" id="letter-template-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
+                                    autocomplete="off" aria-describedby="returnEnvelopeList" aria-haspopup="listbox" data-id=""
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter return envelope</span>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="returnEnvelopeList" class="dropdown-options returnEnvelopeList" role="listbox"
+                                aria-labelledby="return-envelope-input"></div>
+                            <span class="error-message"></span>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-template-envelope-type" class="input-label">Envelope Type</label>
+                        <div class="mapping-dropdown">
+                          <div class="envelope-type-dropdown-wrap">
+                              <input type="text" id="letter-template-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window" readonly/>
+                              <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                          </div>
+                          <div id="envelope-type-list" class="dropdown-options envelope-type-list">
+                            <li class="dropdown-item" data-id="">Select Envelope Type</li>
+                            <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
+                            <li class="dropdown-item" data-id="flat">Flat Mailer</li>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-template-input" class="input-label">Template <span class="asterisk">*</span></label>
+                        <div class="mapping-dropdown">
+                            <div class="template-dropdown-wrap">
+                                <input type="text" id="letter-template-input" class="frontTemplate" placeholder="Search or Enter Template"
+                                    autocomplete="off" aria-describedby="frontTemplateList" aria-haspopup="listbox"
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter template</span>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                aria-labelledby="front-template-input"></div>
+                            <span class="error-message"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="checkboxes-container">
+                      <div class="color checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input color-input" name="color"/>
+                                  <span>Color</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="perforate-first-page checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input preforate-first-page-input" name="perforateFirstPage"/>
+                                  <span>Perforate First Page</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="express-delivery checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
+                                  <span>Express Delivery</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="double-sided checkbox-wrap">
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
+                                <span>Double Sided</span>
+                            </label>
+                        </div>
+                      </div>
+                      <div class="insert-blank-page checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input insert-blank-page-input" name="insertBlankPage"/>
+                                  <span>Insert Blank Page for Address</span>
+                              </label>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="letter-card-insert-screen" class="LettersCardInsert letters-card-insert">
+          <div class="screen-1 screen">
+              <div class="container spacer html-creation-type">
+                <div class="html-screen-wrapper">
+                  <h3 class="section-label">Letters with Card Insert -  HTML</h3>
+                  <div class="outer-input-fields">
+                      <div class="input-fields">
+                          <div class="input-box">
+                              <label for="letter-card-insert-html-description" class="input-label">Description <span class="asterisk">*</span></label>
+                              <input type="text" class="input-field description" id="letter-card-insert-html-description" name="description" />
+                              <span class="error-msg">The input value is missing</span>
+                          </div>
+                          <div class="input-box">
+                              <label for="letter-html-mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                              <span class="error-msg">The input value is missing</span>
+                              <select class="input-field mailing-class" id="letter-html-mailingClass" name="mailingClass">
+                                  <option value="first_class" selected>
+                                      First Class (7 - 10 business days)
+                                  </option>
+                                  <option value="standard_class">
+                                      Standard Class (10 - 14 business days)
+                                  </option>
+                              </select>
+                          </div>
+                          <div class="input-box">
+                              <label for="letter-card-insert-html-extra-service" class="input-label">Extra Service</label>
+                              <div class="mapping-dropdown">
+                                <div class="extra-service-dropdown-wrap">
+                                    <input type="text" id="letter-card-insert-html-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
+                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                </div>
+                                <div id="extra-service-list" class="dropdown-options extra-service-list">
+                                  <li class="dropdown-item" data-id="">Select Extra Service</li>
+                                  <li class="dropdown-item" data-id="registered">Registered Mail</li>
+                                  <li class="dropdown-item" data-id="certified">Certified</li>
+                                  <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="input-box">
+                            <label for="letter-card-insert-html-return-envelope-input" class="input-label">Return Envelope</label>
+                            <div class="mapping-dropdown">
+                                <div class="return-envelope-dropdown-wrap">
+                                    <input type="text" id="letter-card-insert-html-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
+                                        autocomplete="off" aria-describedby="returnEnvelopeList" aria-haspopup="listbox" data-id=""
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter return envelope</span>
+                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                </div>
+                                <div id="returnEnvelopeList" class="dropdown-options returnEnvelopeList" role="listbox"
+                                    aria-labelledby="return-envelope-input"></div>
+                                <span class="error-message"></span>
+                            </div>
+                          </div>
+                          <div class="input-box">
+                            <label for="letter-card-insert-html-envelope-type" class="input-label">Envelope Type</label>
+                            <div class="mapping-dropdown">
+                              <div class="envelope-type-dropdown-wrap">
+                                  <input type="text" id="letter-card-insert-html-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window" readonly/>
+                                  <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                              </div>
+                              <div id="envelope-type-list" class="dropdown-options envelope-type-list">
+                                <li class="dropdown-item" data-id="">Select Envelope Type</li>
+                                <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
+                                <li class="dropdown-item" data-id="flat">Flat Mailer</li>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="input-box card-insert-input card-insert-input-pdf hidden">
+                            <label for="letter-card-insert-input-html-pdfLink" class="input-label">Card PDF URL <span class="asterisk">*</span></label>
+                            <input type="text" class="input-field pdfLink cardPdfLink" id="letter-card-insert-input-html-pdfLink" name="pdfLink" />
+                            <span class="error-msg">Please enter required field</span>
+                          </div>
+                          <div class="input-box card-insert-input card-insert-input-template hidden">
+                            <label for="letter-card-insert-html-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
+                            <div class="mapping-dropdown">
+                                <div class="template-dropdown-wrap">
+                                    <input type="text" id="letter-card-insert-html-front-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
+                                        autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter template</span>
+                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                </div>
+                                <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                    aria-labelledby="template-input"></div>
+                                <span class="error-message"></span>
+                            </div>
+                          </div>
+                          <div class="input-box card-insert-input card-insert-input-template-doubleSide hidden">
+                            <label for="letter-card-insert-html-back-template-input" class="input-label">Card Back Template <span class="asterisk">*</span></label>
+                            <div class="mapping-dropdown">
+                                <div class="template-dropdown-wrap">
+                                    <input type="text" id="letter-card-insert-html-back-template-input" class="input-field backTemplate template-input card-back-template" placeholder="Search or Enter Template"
+                                        autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter template</span>
+                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                </div>
+                                <div id="backTemplateList" class="dropdown-options backTemplateList" role="listbox"
+                                    aria-labelledby="template-input"></div>
+                                <span class="error-message"></span>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="html-size">
+                      <div class="input-label-radio"><b>Card Size</b> <span class="asterisk">*</span></div>
+                      <div class="size-radio-buttons-wrap">
+                          <div class="radio-buttons">
+                              <label class="radio-label size-radio-label">
+                                  <input type="radio" class="radio-input" name="html-plastic-card-size" value="standard"
+                                      checked />
+                                  <span>Standard</span>
+                              </label>
+                          </div>
+                          <span class="error-msg">Please Select at least one size.</span>
+                      </div>
+                  </div>
+                  <div class="checkboxes-container">
+                    <div class="color checkbox-wrap">
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input color-input" name="color"/>
+                                <span>Color</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="perforate-first-page checkbox-wrap">
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input preforate-first-page-input" name="perforateFirstPage"/>
+                                <span>Perforate First Page</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="express-delivery checkbox-wrap">
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
+                                <span>Express Delivery</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="double-sided checkbox-wrap">
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
+                                <span>Double Sided</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="insert-blank-page checkbox-wrap">
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input insert-blank-page-input" name="insertBlankPage"/>
+                                <span>Insert Blank Page for Address</span>
+                            </label>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="html-editor">
+                  <div class="html-btn-wrap">
+                      <button type="button" class="btn btn-light html-btn-front show">
+                          HTML
+                      </button>
+                      <button type="button" class="btn btn-light html-btn-card-front card-insert-input card-insert-input-html hidden">
+                          Card Front HTML
+                      </button>
+                      <button type="button" class="btn btn-light html-btn-card-back card-insert-input card-insert-input-html-doubleSide hidden">
+                          Card Back HTML
+                      </button>
+                  </div>
+                  <textarea class="html-editor-front html-area show" data-btn-label="HTML"></textarea>
+                  <textarea class="html-editor-front-card-insert html-area card-insert-input card-insert-input-html hidden" data-btn-label="Card Front HTML"></textarea>
+                  <textarea class="html-editor-back-card-insert html-area card-insert-input card-insert-input-html-doubleSide hidden" data-btn-label="Card Back HTML"></textarea>
+                  <span class="error-msg">Please enter content in the following fields:</span>
+                </div>
+              </div>
+          </div>
+          <div class="screen-2 screen">
+            <div class="spacer">
+              <div class="pdf-container letter-pdf-container pdf-creation-type">
+                <div class="pdf-screen-wrapper">
+                  <h3 class="section-label">Letters with Card Insert - PDF</h3>
+                  <div class="letter-pdf-fields">
+                    <div class="input-fields">
+                      <div class="input-box">
+                          <label for="letter-card-insert-pdf-description" class="input-label">Description <span class="asterisk">*</span></label>
+                          <input type="text" class="input-field description" id="letter-card-insert-pdf-description" name="description" />
+                          <span class="error-msg">Please enter required field</span>
+                      </div>
+                      <div class="input-box">
+                          <label for="letter-pdf-mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                          <select class="input-field mailing-class" id="letter-pdf-mailingClass" name="mailingClass">
+                              <option value="first_class" selected>
+                                  First Class (7 - 10 business days)
+                              </option>
+                              <option value="standard_class">
+                                  Standard Class (10 - 14 business days)
+                              </option>
+                          </select>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-card-insert-pdf-extra-service" class="input-label">Extra Service</label>
+                        <div class="mapping-dropdown">
+                          <div class="extra-service-dropdown-wrap">
+                              <input type="text" id="letter-card-insert-pdf-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
+                              <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                          </div>
+                          <div id="extra-service-list" class="dropdown-options extra-service-list">
+                            <li class="dropdown-item" data-id="">Select Extra Service</li>
+                            <li class="dropdown-item" data-id="registered">Registered Mail</li>
+                            <li class="dropdown-item" data-id="certified">Certified</li>
+                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-card-insert-pdf-return-envelope-input" class="input-label">Return Envelope</label>
+                        <div class="mapping-dropdown">
+                            <div class="return-envelope-dropdown-wrap">
+                                <input type="text" id="letter-card-insert-pdf-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
+                                    autocomplete="off" aria-describedby="returnEnvelopeList" aria-haspopup="listbox" data-id=""
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter return envelope</span>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="returnEnvelopeList" class="dropdown-options returnEnvelopeList" role="listbox"
+                                aria-labelledby="return-envelope-input"></div>
+                            <span class="error-message"></span>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                            <label for="letter-card-insert-pdf-envelope-type" class="input-label">Envelope Type</label>
+                            <div class="mapping-dropdown">
+                            <div class="envelope-type-dropdown-wrap">
+                                <input type="text" id="letter-card-insert-pdf-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window" readonly/>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="envelope-type-list" class="dropdown-options envelope-type-list">
+                                <li class="dropdown-item" data-id="">Select Envelope Type</li>
+                                <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
+                                <li class="dropdown-item" data-id="flat">Flat Mailer</li>
+                            </div>
+                            </div>
+                      </div>
+                      <div class="input-box">
+                          <label for="letter-card-insert-pdf-pdfLink" class="input-label">PDF URL <span class="asterisk">*</span></label>
+                          <input type="text" class="input-field pdfLink" id="letter-card-insert-pdf-pdfLink" name="pdfLink" />
+                          <span class="error-msg">Please enter required field</span>
+                      </div>
+                      <div class="input-box card-insert-input card-insert-input-template hidden">
+                            <label for="letter-card-insert-pdf-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
+                            <div class="mapping-dropdown">
+                                <div class="template-dropdown-wrap">
+                                    <input type="text" id="letter-card-insert-pdf-front-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
+                                        autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter template</span>
+                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                </div>
+                                <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                    aria-labelledby="template-input"></div>
+                                <span class="error-message"></span>
+                            </div>
+                      </div>
+                      <div class="input-box card-insert-input card-insert-input-template-doubleSide hidden">
+                            <label for="letter-card-insert-pdf-back-template-input" class="input-label">Card Back Template <span class="asterisk">*</span></label>
+                            <div class="mapping-dropdown">
+                                <div class="template-dropdown-wrap">
+                                    <input type="text" id="letter-card-insert-pdf-back-template-input" class="input-field backTemplate template-input card-back-template" placeholder="Search or Enter Template"
+                                        autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                        aria-expanded="false" />
+                                    <span class="error-msg">Please enter template</span>
+                                    <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                                </div>
+                                <div id="backTemplateList" class="dropdown-options backTemplateList" role="listbox"
+                                    aria-labelledby="template-input"></div>
+                                <span class="error-message"></span>
+                            </div>
+                      </div>
+                      <div class="input-box card-insert-input card-insert-input-pdf hidden">
+                        <label for="letter-card-insert-input-pdf-pdfLink" class="input-label">Card PDF URL <span class="asterisk">*</span></label>
+                        <input type="text" class="input-field pdfLink cardPdfLink" id="letter-card-insert-input-pdf-pdfLink" name="pdfLink" />
+                        <span class="error-msg">Please enter required field</span>
+                      </div>
+                    </div>
+                    <div class="card-size">
+                      <div class="input-label-radio"><b>Card Size</b> <span class="asterisk">*</span></div>
+                      <div class="card-size-radio-buttons-wrap">
+                          <div class="radio-buttons">
+                              <label class="radio-label size-radio-label">
+                                  <input type="radio" class="radio-input"  name="pdf-plastic-card-size" value="standard"
+                                      checked="checked" />
+                                  <span>Standard</span>
+                              </label>
+                          </div>
+                          <span class="error-msg">Please Select at least one size.</span>
+                      </div>
+                    </div>
+                    <div class="checkboxes-container">
+                      <div class="color checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input color-input" name="color"/>
+                                  <span>Color</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="perforate-first-page checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input preforate-first-page-input" name="perforateFirstPage"/>
+                                  <span>Perforate First Page</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="express-delivery checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
+                                  <span>Express Delivery</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="double-sided checkbox-wrap">
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
+                                <span>Double Sided</span>
+                            </label>
+                        </div>
+                      </div>
+                      <div class="insert-blank-page checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input insert-blank-page-input" name="insertBlankPage"/>
+                                  <span>Insert Blank Page for Address</span>
+                              </label>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="html-editor card-insert-input card-insert-input-html hidden">
+                  <div class="html-btn-wrap">
+                      <button type="button" class="btn btn-light html-btn-card-front show">
+                        Card Front HTML
+                      </button>
+                      <button type="button" class="btn btn-light html-btn-card-back card-insert-input card-insert-input-html-doubleSide hidden">
+                        Card Back HTML
+                      </button>
+                  </div>
+                  <textarea class="html-editor-front-card-insert html-area show" data-btn-label="Card Front HTML"></textarea>
+                  <textarea class="html-editor-back-card-insert html-area card-insert-input card-insert-input-html-doubleSide hidden" data-btn-label="Card Back HTML"></textarea>
+                  <span class="error-msg">Please enter content in the following fields:</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="screen-3 screen">
+            <div class="spacer">
+              <div class="template-container letter-card-insert-template-container template-creation-type">
+                <div class="template-screen-wrapper">
+                  <h3 class="section-label">Letters with Card Insert - Existing Template</h3>
+                  <div class="letter-card-insert-template-fields">
+                    <div class="existing-template-details">
+                      <div class="input-box">
+                          <label for="letter-card-insert-template-description" class="input-label">Description <span class="asterisk">*</span></label>
+                          <input type="text" class="input-field description" id="letter-card-insert-template-description" name="description" />
+                          <span class="error-msg">Please enter required field</span>
+                      </div>
+                      <div class="input-box">
+                          <label for="letter-card-insert-template-mailingClass" class="input-label">Mailing Class <span class="asterisk">*</span></label>
+                          <select class="input-field mailing-class" id="letter-card-insert-template-mailingClass" name="mailingClass">
+                              <option value="first_class" selected>
+                                  First Class (7 - 10 business days)
+                              </option>
+                              <option value="standard_class">
+                                  Standard Class (10 - 14 business days)
+                              </option>
+                          </select>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-card-insert-template-extra-service" class="input-label">Extra Service</label>
+                        <div class="mapping-dropdown">
+                          <div class="extra-service-dropdown-wrap">
+                              <input type="text" id="letter-card-insert-template-extra-service" class="input-field extra-service" placeholder="Select Extra Service" readonly/>
+                              <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                          </div>
+                          <div id="extra-service-list" class="dropdown-options extra-service-list">
+                            <li class="dropdown-item" data-id="">Select Extra Service</li>
+                            <li class="dropdown-item" data-id="registered">Registered Mail</li>
+                            <li class="dropdown-item" data-id="certified">Certified</li>
+                            <li class="dropdown-item" data-id="certified_return_receipt">Certified With Return Receipt</li>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-card-insert-template-return-envelope-input" class="input-label">Return Envelope</label>
+                        <div class="mapping-dropdown">
+                            <div class="return-envelope-dropdown-wrap">
+                                <input type="text" id="letter-card-insert-template-return-envelope-input" class="return-envelope-input returnEnvelope" placeholder="Search or Enter Return Envelope"
+                                    autocomplete="off" aria-describedby="returnEnvelopeList" aria-haspopup="listbox" data-id=""
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter return envelope</span>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="returnEnvelopeList" class="dropdown-options returnEnvelopeList" role="listbox"
+                                aria-labelledby="return-envelope-input"></div>
+                            <span class="error-message"></span>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-card-insert-template-envelope-type" class="input-label">Envelope Type</label>
+                        <div class="mapping-dropdown">
+                          <div class="envelope-type-dropdown-wrap">
+                              <input type="text" id="letter-card-insert-template-envelope-type" class="input-field envelope-type" placeholder="Select Envelope Type" value="Standard Double Window" data-id="standard_double_window" readonly/>
+                              <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                          </div>
+                          <div id="envelope-type-list" class="dropdown-options envelope-type-list">
+                            <li class="dropdown-item" data-id="">Select Envelope Type</li>
+                            <li class="dropdown-item" data-id="standard_double_window">Standard Double Window</li>
+                            <li class="dropdown-item" data-id="flat">Flat Mailer</li>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="input-box">
+                        <label for="letter-card-insert-creation-template-input" class="input-label">Template <span class="asterisk">*</span></label>
+                        <div class="mapping-dropdown">
+                            <div class="template-dropdown-wrap">
+                                <input type="text" id="letter-card-insert-creation-template-input" class="frontTemplate template-input creation-template" placeholder="Search or Enter Template"
+                                    autocomplete="off" aria-describedby="frontTemplateList" aria-haspopup="listbox"
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter template</span>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                aria-labelledby="front-template-input"></div>
+                            <span class="error-message"></span>
+                        </div>
+                      </div>
+                      <div class="input-box card-insert-input card-insert-input-template hidden">
+                        <label for="letter-card-insert-front-template-input" class="input-label">Card Front Template <span class="asterisk">*</span></label>
+                        <div class="mapping-dropdown">
+                            <div class="template-dropdown-wrap">
+                                <input type="text" id="letter-card-insert-front-template-input" class="input-field frontTemplate template-input card-front-template" placeholder="Search or Enter Template"
+                                    autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                    aria-expanded="false" />
+                                <span class="error-msg">Please enter template</span>
+                                <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                            </div>
+                            <div id="frontTemplateList" class="dropdown-options frontTemplateList" role="listbox"
+                                aria-labelledby="template-input"></div>
+                            <span class="error-message"></span>
+                        </div>
+                      </div>
+                      <div class="input-box card-insert-input card-insert-input-template-doubleSide hidden">
+                          <label for="letter-card-insert-back-template-input" class="input-label">Card Back Template <span class="asterisk">*</span></label>
+                          <div class="mapping-dropdown">
+                              <div class="template-dropdown-wrap">
+                                  <input type="text" id="letter-card-insert-back-template-input" class="input-field backTemplate template-input card-back-template" placeholder="Search or Enter Template"
+                                      autocomplete="off" aria-describedby="TemplateList" aria-haspopup="listbox"
+                                      aria-expanded="false" />
+                                  <span class="error-msg">Please enter template</span>
+                                  <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                              </div>
+                              <div id="backTemplateList" class="dropdown-options backTemplateList" role="listbox"
+                                  aria-labelledby="template-input"></div>
+                              <span class="error-message"></span>
+                          </div>
+                      </div>
+                      <div class="input-box card-insert-input card-insert-input-pdf hidden">
+                        <label for="letter-card-insert-input-template-pdfLink" class="input-label">Card PDF URL <span class="asterisk">*</span></label>
+                        <input type="text" class="input-field pdfLink cardPdfLink" id="letter-card-insert-input-template-pdfLink" name="pdfLink" />
+                        <span class="error-msg">Please enter required field</span>
+                      </div>
+                    </div>
+                    <div class="card-size">
+                      <div class="input-label-radio"><b>Card Size</b> <span class="asterisk">*</span></div>
+                      <div class="card-size-radio-buttons-wrap">
+                          <div class="radio-buttons">
+                              <label class="radio-label size-radio-label">
+                                  <input type="radio" class="radio-input"  name="template-plastic-card-size" value="standard"
+                                      checked />
+                                  <span>Standard</span>
+                              </label>
+                          </div>
+                          <span class="error-msg">Please Select at least one size.</span>
+                      </div>
+                    </div>
+                    <div class="checkboxes-container">
+                      <div class="color checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input color-input" name="color"/>
+                                  <span>Color</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="perforate-first-page checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input preforate-first-page-input" name="perforateFirstPage"/>
+                                  <span>Perforate First Page</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="express-delivery checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input express-delivery-input" name="expDelivery"/>
+                                  <span>Express Delivery</span>
+                              </label>
+                          </div>
+                      </div>
+                      <div class="double-sided checkbox-wrap">
+                        <div class="checkbox-wrapper">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="checkbox-input double-sided-input" name="doubleSided"/>
+                                <span>Double Sided</span>
+                            </label>
+                        </div>
+                      </div>
+                      <div class="insert-blank-page checkbox-wrap">
+                          <div class="checkbox-wrapper">
+                              <label class="checkbox-label">
+                                  <input type="checkbox" class="checkbox-input insert-blank-page-input" name="insertBlankPage"/>
+                                  <span>Insert Blank Page for Address</span>
+                              </label>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="html-editor card-insert-input card-insert-input-html hidden">
+                  <div class="html-btn-wrap">
+                      <button type="button" class="btn btn-light html-btn-card-front show">
+                          Card Front HTML
+                      </button>
+                      <button type="button" class="btn btn-light html-btn-card-back card-insert-input card-insert-input-html-doubleSide hidden">
+                          Card Back HTML
+                      </button>
+                  </div>
+                  <textarea class="html-editor-front-card-insert html-area show" data-btn-label="Card Front HTML"></textarea>
+                  <textarea class="html-editor-back-card-insert html-area card-insert-input card-insert-input-html-doubleSide hidden" data-btn-label="Card Back HTML"></textarea>
+                  <span class="error-msg">Please enter content in the following fields:</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div id="step4" class="step">
+      <div class="error-toast-wrap">
+        <div class="error-toast-message"></div>
+        <div class="remove-error-toast">✖</div>
+      </div>
+        <div class="mapping-container">
+            <div class="sender-contact-container">
+              <div class="message-label-input-wrap">
+                <div class="section-label">Select Sender Contact</div>
+                <div class="input-container">
+                    <div class="existing-contact-radio radio-label-wrap">
+                        <input type="radio" class="radio-input step2radioBTN" id="existing-contact" name="senderContactType" value="existing-contact" checked/>
+                        <label for="existing-contact" class="radio-label">Select Existing</label>
+                    </div>
+                    <div class="postcard-radio radio-label-wrap">
+                        <input type="radio" class="radio-input step2radioBTN" id="create-contact" name="senderContactType" value="create-contact"/>
+                        <label for="create-contact" class="radio-label">Create New</label>
+                    </div>
+                </div>
+              </div>
+              <div class="contact-option-wrapper">
+                <div class="mapping-dropdown contact-dropdown-wrap contact-option existing-contact">
+                    <div class="dropdown-wrap">
+                      <div class="contact-dropdown-container">
+                        <input type="text" id="search-contact" placeholder="Search and select a contact..." autocomplete="off">
+                        <div class="dropdown-icon-angle-wrap"><i class="fa fa-angle-right dropdown-icon"></i></div>
+                        <span class="error-msg">Please select a contact.</span>
+                      </div>
+                    </div>
+                    <div id="dropdown-options" class="dropdown-options">
+                    </div>
+                </div>
+                <div class="contact-option create-contact hidden">
+                  <div class="mapping-fields">
+                    <div class="mapping-fields-group">
+                        <label for="newContactFirstName">First Name <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactFirstName" class="contact-first-name">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactLastName">Last Name</label>
+                        <input type="text" id="newContactLastName" class="contact-last-name">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactCompanyName">Company <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactCompanyName" class="contact-company-name">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactEmail">Email Address</label>
+                        <input type="text" id="newContactEmail" class="contact-email">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactAddressLine1">Address Line 1 <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactAddressLine1" class="contact-address-line1">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactAddressLine2">Address Line 2</label>
+                        <input type="text" id="newContactAddressLine2" class="contact-address-line2">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactCity">City <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactCity" class="contact-city">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactState">State <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactState" class="contact-state">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactCountryCode">Country Code <span class="asterisk">*</span></label>
+                        <input type="text" id="newContactCountryCode" class="contact-country-code">
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="newContactPostal">ZipCode/ Postal</label>
+                        <input type="text" id="newContactPostal" class="contact-postal">
+                    </div>
+                  </div>
+                  <span class="error-msg">Please fill all required fields.</span>
+                </div>
+              </div>
+            </div>
+            <div class="mapping-divider"></div>
+            <div class="receiver-contact-contact">
+                <h2 class="step4-heading" id="step4-heading">Map Recipient Contact Fields</h2>
+                <div class="mapping-fields">
+                    <div class="mapping-fields-group">
+                        <label for="firstName">First Name <span class="asterisk">*</span></label>
+                        <select id="firstName">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="lastName">Last Name</label>
+                        <select id="lastName">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="companyName">Company <span class="asterisk">*</span></label>
+                        <select id="companyName">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="email">Email Address</label>
+                        <select id="email">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="addressLine1">Address Line 1 <span class="asterisk">*</span></label>
+                        <select id="addressLine1">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="addressLine2">Address Line 2</label>
+                        <select id="addressLine2">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="city">City <span class="asterisk">*</span></label>
+                        <select id="city">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="provinceOrState">State <span class="asterisk">*</span></label>
+                        <select id="provinceOrState">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="countryCode">Country Code <span class="asterisk">*</span></label>
+                        <select id="countryCode">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                    <div class="mapping-fields-group">
+                        <label for="postalOrZip">ZipCode/ Postal</label>
+                        <select id="postalOrZip">
+                            <option>Select</option>
+                        </select>
+                    </div>
+                </div>
+                <span class="error-message-contact-mapping" style="display: block;"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="step5" class="step">
+        <div class="container spacer">
+            <div class="preview-container">
+                <div class="section-label">Preview</div>
+                <div class="preview-box">
+                    <div id="pdf-preview-container" style="display: none;">
+                        <iframe id="pdf-preview" style="border: 1px solid #ccc; width: 100%; height: 500px;"></iframe>
+                    </div>
+                    <div class="retry-btn-wrap">
+                        <div class="preview-message">
+                            <div>Review your mail piece before sending!</div>
+                            <div>Click the button below to check the preview.</div>
+                        </div>
+                        <button class="retry-preview-btn">Show Preview</button>
+                        <div class="loader"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
