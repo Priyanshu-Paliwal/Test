@@ -7,7 +7,7 @@
 	"type": "REST",
 	"lang": {
 		"en-US": {
-			"name": "PostGrid",
+			"name": "PostGrid QA",
 			"description": "Send letter and postcard from journey Builder using postgrid platform"
 		}
 	},
