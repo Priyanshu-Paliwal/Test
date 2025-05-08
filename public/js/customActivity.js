@@ -565,7 +565,9 @@ define([
 
     var mergeVariableSchema = {};
     mergeVariablesFields.forEach(fieldName => {
-      mergeVariableSchema[fieldName] = '{{'+deData[fieldName]+'}}';
+      if(fieldName !== '' && fieldName !== undefined){
+        mergeVariableSchema[fieldName] = '{{'+deData[fieldName]+'}}';
+      }
     });
 
     let selectedMessageType = $('input[name="msgType"]:checked').val();
