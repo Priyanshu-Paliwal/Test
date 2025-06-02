@@ -6,26 +6,20 @@ const activity = require('./routes/activity');
 
 const app = express();
 
-// ✅ Set nosniff manually for ALL responses (before static files and helmet)
 app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   next();
 });
 
-// ✅ Static files served first
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ Then Helmet for other security headers
 app.use(helmet());
 
-// ✅ Disable "X-Powered-By" for security
 app.disable('x-powered-by');
 
-// ✅ Body parsers
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// ✅ Your API routes
 app.post('/client-credentials/', activity.fetchClientCredentials);
 app.post('/fetch-external-key/', activity.fetchExternalKey);
 app.post('/save/', activity.save);
@@ -33,8 +27,5 @@ app.post('/validate/', activity.validate);
 app.post('/publish/', activity.publish);
 app.post('/execute/', activity.execute);
 
-// ✅ Start server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT);
