@@ -9,7 +9,7 @@ const app = express();
 app.use(helmet()); 
 app.disable('x-powered-by');
 
-app.use(express.static(path.join(__dirname, 'public'), {
+app.use(express.static(path.join(__dirname, '/public'), {
   setHeaders: (res, path) => {
     res.setHeader('X-Content-Type-Options', 'nosniff'); 
   }
