@@ -10,7 +10,7 @@ const app = express();
 app.disable('x-powered-by');
 
 // 2. Serve static files with `X-Content-Type-Options: nosniff`
-app.use(express.static(path.join(__dirname, 'public'), {
+app.use(express.static(path.join(__dirname, '/public'), {
   setHeaders: (res, filePath) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
   }
