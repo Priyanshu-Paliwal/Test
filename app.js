@@ -20,10 +20,10 @@ app.use(
                 useDefaults: true,
                 directives: {
                     'default-src': ["'self'"],
-  'script-src': ["'self'", "https://*.marketingcloudapps.com"],
-  'style-src': ["'self'", "https://*.marketingcloudapps.com"],
+  'script-src': ["'self'", "https://*.marketingcloudapps.com", "https://*.exacttarget.com"],
+  'style-src': ["'self'", "https://*.marketingcloudapps.com", "https://fonts.googleapis.com/css2", "https://fonts.googleapis.com/css"],
   'img-src': ["'self'", "data:", "https://*.marketingcloudapps.com"],
-  'connect-src': ["'self'", "https://*.marketingcloudapps.com"],
+  'connect-src': ["'self'", "https://*.marketingcloudapps.com", "https://api.postgrid.com"],
   'frame-ancestors': ["'self'", "https://*.marketingcloudapps.com"],
   'form-action': ["'self'"],
   'object-src': ["'none'"],
