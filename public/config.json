@@ -15,7 +15,7 @@
 		"execute": {
 			"inArguments": [],
 			"outArguments": [],
-			"url": "https://postal-hub-server-production-f121.up.railway.app/execute",
+			"url": "https://test-production-512f.up.railway.app//execute",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -26,7 +26,7 @@
 	"configurationArguments": {
 		"applicationExtensionKey": "b2556cf2-85b9-4239-a0a9-b10edbf3f4c0",
 		"save": {
-			"url": "https://postal-hub-server-production-f121.up.railway.app/save",
+			"url": "https://test-production-512f.up.railway.app//save",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -34,7 +34,7 @@
 			"timeout": 2000
 		},
 		"publish": {
-			"url": "https://postal-hub-server-production-f121.up.railway.app/publish",
+			"url": "https://test-production-512f.up.railway.app//publish",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -42,7 +42,7 @@
 			"timeout": 2000
 		},
 		"validate": {
-			"url": "https://postal-hub-server-production-f121.up.railway.app/validate",
+			"url": "https://test-production-512f.up.railway.app//validate",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
@@ -50,7 +50,7 @@
 			"timeout": 2000
 		},
 		"stop": {
-			"url": "https://postal-hub-server-production-f121.up.railway.app/stop",
+			"url": "https://test-production-512f.up.railway.app//stop",
 			"verb": "POST",
 			"body": "",
 			"format": "json",
