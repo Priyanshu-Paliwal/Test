@@ -7,34 +7,39 @@ const activity = require('./routes/activity');
 const app = express();
 
 // ========================================================
-// SECURITY HEADERS (MUST BE FIRST)
+// 1. GLOBAL SETTINGS (Fixes "X-Powered-By" Low Risk)
+// ========================================================
+// We disable this immediately, before any middleware runs.
+app.disable('x-powered-by');
+
+// ========================================================
+// 2. SECURITY HEADERS (MUST BE FIRST)
 // ========================================================
 app.use(
   helmet({
-    // 1. Fixes "Missing Anti-clickjacking Header" (Medium Risk)
-    // We set 'sameorigin' here, but the CSP 'frame-ancestors' below takes priority for Salesforce.
+    // Fixes "Missing Anti-clickjacking Header" (Medium Risk)
     frameguard: { action: "sameorigin" },
 
-    // 2. Fixes "Strict-Transport-Security Header Not Set" (Low Risk)
+    // Fixes "Strict-Transport-Security" (Low Risk)
     hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
 
-    // 3. Fixes "Server Leaks Information via X-Powered-By" (Low Risk)
-    xPoweredBy: false,
-
-    // 4. Fixes "X-Content-Type-Options Header Missing" (Low Risk)
+    // Fixes "X-Content-Type-Options" (Low Risk)
     noSniff: true,
 
-    // 5. Fixes "CSP Header Not Set" (Medium Risk) & "Cross-Domain JS"
+    // Fixes "CSP: Failure to Define Directive" (Medium Risk)
     contentSecurityPolicy: {
-      useDefaults: false, // CRITICAL: Stops Helmet from adding conflicting default rules
+      useDefaults: false,
       directives: {
         defaultSrc: ["'self'"],
         
-        // SCRIPT-SRC: Defines where executable code can come from
+        // Fixes "CSP Failure": explicitly define where forms can be sent
+        formAction: ["'self'"], 
+        
+        // Essential for Salesforce/PostGrid (Keep 'unsafe-eval' or app breaks)
         scriptSrc: [
           "'self'",
-          "'unsafe-inline'", // Required for basic UI frameworks
-          "'unsafe-eval'",   // Required for Salesforce & PostGrid functionality
+          "'unsafe-inline'",
+          "'unsafe-eval'",
           "https://*.marketingcloudapps.com",
           "https://*.exacttarget.com",
           "https://*.postgrid.com",
@@ -43,8 +48,6 @@ app.use(
           "https://cdnjs.cloudflare.com",
           "https://cdn.jsdelivr.net"
         ],
-        
-        // STYLE-SRC: Defines where CSS can come from
         styleSrc: [
           "'self'", 
           "'unsafe-inline'", 
@@ -52,8 +55,6 @@ app.use(
           "https://fonts.googleapis.com", 
           "https://cdnjs.cloudflare.com"
         ],
-        
-        // IMG-SRC: Defines where images can load from
         imgSrc: [
           "'self'", 
           "data:", 
@@ -61,25 +62,18 @@ app.use(
           "https://*.marketingcloudapps.com", 
           "https://*.postgrid.com"
         ],
-        
-        // CONNECT-SRC: Defines where AJAX/API calls can go
         connectSrc: [
           "'self'", 
           "https://*.marketingcloudapps.com", 
           "https://api.postgrid.com"
         ],
-        
-        // FRAME-ANCESTORS: The modern fix for Clickjacking (allows Salesforce embedding)
         frameAncestors: [
           "'self'", 
           "https://*.marketingcloudapps.com", 
           "https://*.salesforce.com"
         ],
-        
-        // EXTRAS
         fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
         objectSrc: ["'none'"],
-        baseUri: ["'self'"],
         upgradeInsecureRequests: [],
       },
     },
@@ -87,12 +81,12 @@ app.use(
 );
 
 // ========================================================
-// STATIC FILES (MUST BE AFTER SECURITY HEADERS)
+// 3. STATIC FILES (MUST BE AFTER SECURITY HEADERS)
 // ========================================================
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ========================================================
-// APP LOGIC (NO CHANGES TO FUNCTIONALITY)
+// 4. APP LOGIC
 // ========================================================
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -104,7 +98,6 @@ app.post('/validate/', activity.validate);
 app.post('/publish/', activity.publish);
 app.post('/execute/', activity.execute);
 
-// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
