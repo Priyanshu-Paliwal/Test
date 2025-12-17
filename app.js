@@ -7,29 +7,34 @@ const activity = require('./routes/activity');
 const app = express();
 
 // ========================================================
-// SECURITY HEADERS (Must be the FIRST app.use)
+// SECURITY HEADERS (MUST BE FIRST)
 // ========================================================
 app.use(
   helmet({
     // 1. Fixes "Missing Anti-clickjacking Header" (Medium Risk)
-    frameguard: { action: "sameorigin" }, 
+    // We set 'sameorigin' here, but the CSP 'frame-ancestors' below takes priority for Salesforce.
+    frameguard: { action: "sameorigin" },
 
     // 2. Fixes "Strict-Transport-Security Header Not Set" (Low Risk)
     hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
 
-    // 3. Fixes "X-Content-Type-Options Header Missing" (Low Risk)
+    // 3. Fixes "Server Leaks Information via X-Powered-By" (Low Risk)
+    xPoweredBy: false,
+
+    // 4. Fixes "X-Content-Type-Options Header Missing" (Low Risk)
     noSniff: true,
 
-    // 4. Fixes "CSP Header Not Set" (Medium Risk) 
-    // AND "Cross-Domain JavaScript Source File Inclusion" (Low Risk)
+    // 5. Fixes "CSP Header Not Set" (Medium Risk) & "Cross-Domain JS"
     contentSecurityPolicy: {
+      useDefaults: false, // CRITICAL: Stops Helmet from adding conflicting default rules
       directives: {
         defaultSrc: ["'self'"],
-        // Fixes Console Errors: 'unsafe-eval' allows Salesforce/jQuery to run
+        
+        // SCRIPT-SRC: Defines where executable code can come from
         scriptSrc: [
           "'self'",
-          "'unsafe-inline'",
-          "'unsafe-eval'", 
+          "'unsafe-inline'", // Required for basic UI frameworks
+          "'unsafe-eval'",   // Required for Salesforce & PostGrid functionality
           "https://*.marketingcloudapps.com",
           "https://*.exacttarget.com",
           "https://*.postgrid.com",
@@ -38,51 +43,60 @@ app.use(
           "https://cdnjs.cloudflare.com",
           "https://cdn.jsdelivr.net"
         ],
-        // Fixes Style/Font loading issues
+        
+        // STYLE-SRC: Defines where CSS can come from
         styleSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "https://*.marketingcloudapps.com",
-          "https://fonts.googleapis.com",
+          "'self'", 
+          "'unsafe-inline'", 
+          "https://*.marketingcloudapps.com", 
+          "https://fonts.googleapis.com", 
           "https://cdnjs.cloudflare.com"
         ],
-        // Fixes Image loading (blob: and data: are often needed)
+        
+        // IMG-SRC: Defines where images can load from
         imgSrc: [
-          "'self'",
-          "data:",
+          "'self'", 
+          "data:", 
           "blob:", 
-          "https://*.marketingcloudapps.com",
+          "https://*.marketingcloudapps.com", 
           "https://*.postgrid.com"
         ],
+        
+        // CONNECT-SRC: Defines where AJAX/API calls can go
         connectSrc: [
-          "'self'",
-          "https://*.marketingcloudapps.com",
+          "'self'", 
+          "https://*.marketingcloudapps.com", 
           "https://api.postgrid.com"
         ],
-        // Essential for Salesforce Apps: Allows your app to be shown inside Salesforce
-        frameAncestors: ["'self'", "https://*.marketingcloudapps.com", "https://*.salesforce.com"],
+        
+        // FRAME-ANCESTORS: The modern fix for Clickjacking (allows Salesforce embedding)
+        frameAncestors: [
+          "'self'", 
+          "https://*.marketingcloudapps.com", 
+          "https://*.salesforce.com"
+        ],
+        
+        // EXTRAS
         fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
         objectSrc: ["'none'"],
+        baseUri: ["'self'"],
         upgradeInsecureRequests: [],
       },
     },
-    // 5. Fixes "Server Leaks Information via 'X-Powered-By'" (Low Risk)
-    hidePoweredBy: true, 
   })
 );
 
 // ========================================================
-// STATIC FILES & APP LOGIC
+// STATIC FILES (MUST BE AFTER SECURITY HEADERS)
 // ========================================================
-
-// Serve static files AFTER security headers are set
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Body parsers (JSON/Form data)
+// ========================================================
+// APP LOGIC (NO CHANGES TO FUNCTIONALITY)
+// ========================================================
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// API routes
 app.post('/client-credentials/', activity.fetchClientCredentials);
 app.post('/fetch-external-key/', activity.fetchExternalKey);
 app.post('/save/', activity.save);
