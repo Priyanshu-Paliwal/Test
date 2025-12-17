@@ -6,66 +6,79 @@ const activity = require('./routes/activity');
 
 const app = express();
 
-// --- SECURITY MIDDLEWARE (MUST BE FIRST) ---
+// ========================================================
+// SECURITY HEADERS (Must be the FIRST app.use)
+// ========================================================
 app.use(
   helmet({
-    // 1. Fixes "Missing Anti-clickjacking Header" (X-Frame-Options)
-    frameguard: { action: "deny" },
+    // 1. Fixes "Missing Anti-clickjacking Header" (Medium Risk)
+    frameguard: { action: "sameorigin" }, 
 
-    // 2. Fixes "Strict-Transport-Security Header Not Set" (HSTS)
+    // 2. Fixes "Strict-Transport-Security Header Not Set" (Low Risk)
     hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
 
-    // 3. Fixes "CSP Header Not Set" & allows your integrations
+    // 3. Fixes "X-Content-Type-Options Header Missing" (Low Risk)
+    noSniff: true,
+
+    // 4. Fixes "CSP Header Not Set" (Medium Risk) 
+    // AND "Cross-Domain JavaScript Source File Inclusion" (Low Risk)
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
+        // Fixes Console Errors: 'unsafe-eval' allows Salesforce/jQuery to run
         scriptSrc: [
-          "'self'", 
-          "'unsafe-inline'", // Needed for many UI frameworks
-          "https://*.marketingcloudapps.com", 
+          "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'", 
+          "https://*.marketingcloudapps.com",
           "https://*.exacttarget.com",
-          "https://*.postgrid.com", 
-          "https://*.salesforce.com"
+          "https://*.postgrid.com",
+          "https://*.salesforce.com",
+          "https://code.jquery.com",
+          "https://cdnjs.cloudflare.com",
+          "https://cdn.jsdelivr.net"
         ],
+        // Fixes Style/Font loading issues
         styleSrc: [
-          "'self'", 
-          "'unsafe-inline'", 
-          "https://*.marketingcloudapps.com", 
-          "https://fonts.googleapis.com"
+          "'self'",
+          "'unsafe-inline'",
+          "https://*.marketingcloudapps.com",
+          "https://fonts.googleapis.com",
+          "https://cdnjs.cloudflare.com"
         ],
+        // Fixes Image loading (blob: and data: are often needed)
         imgSrc: [
-          "'self'", 
-          "data:", 
+          "'self'",
+          "data:",
+          "blob:", 
           "https://*.marketingcloudapps.com",
           "https://*.postgrid.com"
         ],
         connectSrc: [
-          "'self'", 
-          "https://*.marketingcloudapps.com", 
+          "'self'",
+          "https://*.marketingcloudapps.com",
           "https://api.postgrid.com"
         ],
+        // Essential for Salesforce Apps: Allows your app to be shown inside Salesforce
         frameAncestors: ["'self'", "https://*.marketingcloudapps.com", "https://*.salesforce.com"],
-        fontSrc: ["'self'", "https://fonts.gstatic.com"], // Fixes Google Fonts
+        fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
         objectSrc: ["'none'"],
         upgradeInsecureRequests: [],
       },
     },
+    // 5. Fixes "Server Leaks Information via 'X-Powered-By'" (Low Risk)
+    hidePoweredBy: true, 
   })
 );
 
-// Manually ensure nosniff is set (Helmet usually does this, but keeping it as backup is fine)
-app.use((req, res, next) => {
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  next();
-});
+// ========================================================
+// STATIC FILES & APP LOGIC
+// ========================================================
 
-// --- STATIC FILES (Served AFTER security headers) ---
+// Serve static files AFTER security headers are set
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Disable "X-Powered-By"
-app.disable('x-powered-by');
-
-// Body parsers
+// Body parsers (JSON/Form data)
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
