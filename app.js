@@ -6,40 +6,30 @@ const activity = require('./routes/activity');
 
 const app = express();
 
-// ========================================================
-// 1. GLOBAL SETTINGS (Fixes "X-Powered-By" Low Risk)
-// ========================================================
-// We disable this immediately, before any middleware runs.
+// Security: Hide technical stack details from the header
 app.disable('x-powered-by');
 
-// ========================================================
-// 2. SECURITY HEADERS (MUST BE FIRST)
-// ========================================================
+// SECURITY HEADERS (Strict Configuration)
 app.use(
   helmet({
-    // Fixes "Missing Anti-clickjacking Header" (Medium Risk)
+    // Security: Protects against Clickjacking
     frameguard: { action: "sameorigin" },
 
-    // Fixes "Strict-Transport-Security" (Low Risk)
+    // Security: Enforces HTTPS connections
     hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
 
-    // Fixes "X-Content-Type-Options" (Low Risk)
+    // Security: Prevents MIME-type sniffing
     noSniff: true,
 
-    // Fixes "CSP: Failure to Define Directive" (Medium Risk)
+    // Security: Content Security Policy (CSP) to block malicious scripts
     contentSecurityPolicy: {
       useDefaults: false,
       directives: {
         defaultSrc: ["'self'"],
         
-        // Fixes "CSP Failure": explicitly define where forms can be sent
-        formAction: ["'self'"], 
-        
-        // Essential for Salesforce/PostGrid (Keep 'unsafe-eval' or app breaks)
+        // Allow scripts only from trusted domains (No unsafe-inline/eval)
         scriptSrc: [
           "'self'",
-          "'unsafe-inline'",
-          "'unsafe-eval'",
           "https://*.marketingcloudapps.com",
           "https://*.exacttarget.com",
           "https://*.postgrid.com",
@@ -48,49 +38,57 @@ app.use(
           "https://cdnjs.cloudflare.com",
           "https://cdn.jsdelivr.net"
         ],
+        
+        // Allow styles from Google Fonts and Salesforce
         styleSrc: [
-          "'self'", 
-          "'unsafe-inline'", 
-          "https://*.marketingcloudapps.com", 
-          "https://fonts.googleapis.com", 
+          "'self'",
+          "https://*.marketingcloudapps.com",
+          "https://fonts.googleapis.com",
           "https://cdnjs.cloudflare.com"
         ],
+        
+        // Allow images and blobs
         imgSrc: [
-          "'self'", 
-          "data:", 
-          "blob:", 
-          "https://*.marketingcloudapps.com", 
+          "'self'",
+          "data:",
+          "blob:",
+          "https://*.marketingcloudapps.com",
           "https://*.postgrid.com"
         ],
+        
+        // Allow API connections to PostGrid backend
         connectSrc: [
-          "'self'", 
-          "https://*.marketingcloudapps.com", 
+          "'self'",
+          "https://*.marketingcloudapps.com",
           "https://api.postgrid.com"
         ],
+        
+        // Security: Critical for embedding inside Salesforce
         frameAncestors: [
-          "'self'", 
-          "https://*.marketingcloudapps.com", 
+          "'self'",
+          "https://*.marketingcloudapps.com",
           "https://*.salesforce.com"
         ],
+        
         fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
         objectSrc: ["'none'"],
+        
+        // Security: Restrict where forms can be submitted
+        formAction: ["'self'"], 
         upgradeInsecureRequests: [],
       },
     },
   })
 );
 
-// ========================================================
-// 3. STATIC FILES (MUST BE AFTER SECURITY HEADERS)
-// ========================================================
+// Serve static assets (CSS, JS, Images)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ========================================================
-// 4. APP LOGIC
-// ========================================================
+// Parse JSON and URL-encoded bodies
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
+// Activity Routes
 app.post('/client-credentials/', activity.fetchClientCredentials);
 app.post('/fetch-external-key/', activity.fetchExternalKey);
 app.post('/save/', activity.save);
@@ -98,6 +96,7 @@ app.post('/validate/', activity.validate);
 app.post('/publish/', activity.publish);
 app.post('/execute/', activity.execute);
 
+// Start Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

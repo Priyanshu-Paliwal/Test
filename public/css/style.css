@@ -1,239 +1,266 @@
 :root {
-	--heading: 24px;
+    --heading: 24px;
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  font-family: Roboto, sans-serif;
+    padding: 0;
+    margin: 0;
+    font-family: Roboto, sans-serif;
 }
 
+/* --- NEW UTILITY CLASSES TO FIX INLINE STYLES --- */
+.hidden-overflow {
+    overflow: hidden;
+}
+
+.hidden-display {
+    display: none;
+}
+
+.block-display {
+    display: block;
+}
+
+.preview-iframe {
+    border: 1px solid #ccc; 
+    width: 100%; 
+    height: 500px;
+}
+
+.live-mode-error {
+    color: red;
+    display: none;
+    font-size: 16px;
+    margin-top: 30px;
+}
+/* ----------------------------------------------- */
+
 .screen-3 .spacer {
-	padding: 44px;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+    padding: 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .screen-3 .input-fields {
-	display: grid;
-	grid-template-rows: repeat(2, auto);
-	grid-template-columns: repeat(2, auto);
-	align-content: start;
-  gap: 15px 50px;
-	margin-bottom: 40px;
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(2, auto);
+    align-content: start;
+    gap: 15px 50px;
+    margin-bottom: 40px;
 }
 
 .screen-3 .input-box {
-	display: flex;
-	flex-direction: column;
-  width: 48%;
+    display: flex;
+    flex-direction: column;
+    width: 48%;
 }
 
 .input-field {
-	outline: none;
-	border: 3px solid lightgray;
-	border-radius: 4px;
-	height: 32px;
-	width: 100%;
-	font-size: 16px;
-	box-sizing: border-box;
+    outline: none;
+    border: 3px solid lightgray;
+    border-radius: 4px;
+    height: 32px;
+    width: 100%;
+    font-size: 16px;
+    box-sizing: border-box;
 }
 
 .screen-3 .input-field {
-	padding: 2px;
-	border-radius: 3px;
-	border: 3px solid lightgray;
-	box-shadow: 0 0 1px 1px lightgray;
-	transition: 0.5s;
-	outline: none;
+    padding: 2px;
+    border-radius: 3px;
+    border: 3px solid lightgray;
+    box-shadow: 0 0 1px 1px lightgray;
+    transition: 0.5s;
+    outline: none;
 }
 
 .screen-3 .input-label {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .pdf-container .input-label,
 .outer-input-fields .input-fields .input-label {
-  font-size: 16px !important;
+    font-size: 16px !important;
 }
 
 .input-fields .input-box .input-label,
 .input-label-radio {
-	font-size: 16px;
+    font-size: 16px;
 }
 
 .screen-2 .input-label-radio {
-	font-size: 16px;
-	margin-bottom: 10px;
-  }
+    font-size: 16px;
+    margin-bottom: 10px;
+}
 
 .screen-3 .input-label-radio {
-  font-size: 16px;
-  margin-bottom: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 .pdf-size .input-label-radio, .pdf-card-size .input-label-radio {
-	margin: 0;
+    margin: 0;
 }
 
 .html-size .input-label-radio {
-	font-size: 16px;
+    font-size: 16px;
 }
 
 .html-size .radio-buttons,
 .html-size .input-label-radio,
 .outer-input-fields .input-fields {
-	margin: 0;
+    margin: 0;
 }
 
 .trifold .screen-3 .input-label-radio {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .screen-3 .radio-buttons {
-	display: grid;
-	grid-template-columns: repeat(11, auto);
-	justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(11, auto);
+    justify-content: space-between;
 }
 
 .screen-3 .checkbox-label {
-  font-size: 16px;
-  user-select: none;
-  width: max-content;
+    font-size: 16px;
+    user-select: none;
+    width: max-content;
 }
 
 .screen-3 .checkbox-input {
-  margin-right: 5px;
-  width: 1.2em;
-  height: 1.2em;
-  vertical-align: bottom;
+    margin-right: 5px;
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: bottom;
 }
 
 .screen-3 .checkboxes {
-	display: grid;
-	grid-template-rows: repeat(2, auto);
+    display: grid;
+    grid-template-rows: repeat(2, auto);
 }
 
 .screen-3 .three-checkboxes {
-	display: grid;
-	grid-template-columns: repeat(3, auto);
-	justify-content: space-between;
-	margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+    margin-bottom: 15px;
 }
 
 .screen-3 .checkbox-wrapper {
-	display: grid;
-	grid-template-columns: repeat(2, auto);
-	justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: space-between;
 }
 
 .screen-3 .html-editior {
-	border: 3px solid lightgray;
-	border-radius: 10px;
-	outline: none;
-	resize: none;
-	overflow: auto;
-	width: 95%;
-	height: 100%;
-	padding: 10px;
+    border: 3px solid lightgray;
+    border-radius: 10px;
+    outline: none;
+    resize: none;
+    overflow: auto;
+    width: 95%;
+    height: 100%;
+    padding: 10px;
 }
 
 .screen-3 .existing-template-details {
-	display: flex;
-	flex-wrap: wrap;
-  gap: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
 }
 
 .screen-3 .five-checkboxes {
-	display: grid;
-	grid-template-columns: repeat(5, auto);
-	justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    justify-content: space-between;
 }
 
 .screen-3 .drop-pdf {
-	width: 100%;
-	background-color: lightgrey;
-	height: 80px;
-	margin-top: 30px;
-	border-radius: 10px;
-	position: relative;
-	cursor: pointer;
+    width: 100%;
+    background-color: lightgrey;
+    height: 80px;
+    margin-top: 30px;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
 }
 
 .screen-3 .input-label-drop {
-	font-size: 18px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	user-select: none;
+    font-size: 18px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
 }
 
 .error-message {
-	color: red;
-	font-size: 16px;
-	display: inline-block;
+    color: red;
+    font-size: 16px;
+    display: none; /* Changed from inline-block to handle inline style removal */
 }
 
 .screen-3 .screen-2 .error-message {
-	color: red;
-	font-size: 16px;
-	display: block;
-	margin-top: 4px;
+    color: red;
+    font-size: 16px;
+    display: block;
+    margin-top: 4px;
 }
 
 .screen-3 .error-field {
-	border: 1px solid red !important;
+    border: 1px solid red !important;
 }
 
 .mapping-dropdown {
-	display: flex;
-	flex-direction: column;
-  position: relative;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 .screen-3 .mapping-dropdown {
-	position: relative;
-	width: 100%;
+    position: relative;
+    width: 100%;
 }
 
 .screen-3 input[type="text"] {
-  width: 100%;
-  padding: 4px 5px;
-  border-radius: 3px;
-  outline: none;
-  box-sizing: border-box;
-  border: 3px solid lightgray;
-  box-shadow: 0 0 1px 1px lightgray;
-  font-size: 16px;
+    width: 100%;
+    padding: 4px 5px;
+    border-radius: 3px;
+    outline: none;
+    box-sizing: border-box;
+    border: 3px solid lightgray;
+    box-shadow: 0 0 1px 1px lightgray;
+    font-size: 16px;
 }
 
 .mapping-fields-group select,
 #dropdown-options,
 #search-contact {
-	width: 60%;
-	padding: 8px;
-	font-size: 14px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	cursor: pointer;
-  outline: none;
+    width: 60%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
 }
 
 .mapping-fields-group input {
-  width: 196px;
-  padding: 8px;
-  font-size: 14px;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  outline: none;
+    width: 196px;
+    padding: 8px;
+    font-size: 14px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
 }
 
 #dropdown-options,
 #search-contact {
-	width: 50%;
-	margin: auto;
+    width: 50%;
+    margin: auto;
 }
 
 .screen-3 #search-contact,
@@ -252,772 +279,772 @@ body {
 }
 
 .return-envelope-input {
-  padding: 4px;
-  outline: none;
+    padding: 4px;
+    outline: none;
 }
 
 .screen-3 .arrow {
-	border: solid black;
-	border-width: 0 1.5px 1.5px 0;
-	display: inline-block;
-	padding: 3px;
-	position: absolute;
-	right: 10px;
-	top: 50%;
-	transform: translateY(-50%) rotate(45deg);
-	pointer-events: none;
+    border: solid black;
+    border-width: 0 1.5px 1.5px 0;
+    display: inline-block;
+    padding: 3px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    pointer-events: none;
 }
 
 .screen-3 .down {
-	transform: translateY(-50%) rotate(45deg);
+    transform: translateY(-50%) rotate(45deg);
 }
 
 .screen .dropdown-options {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	width: 100%;
-	max-height: 200px;
-	overflow-y: auto;
-	border: 1px solid #ccc;
-	background: #fff;
-	display: none;
-	z-index: 1000;
-	border-radius: 4px;
-	box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    background: #fff;
+    display: none;
+    z-index: 1000;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0 0 0 / 10%);
 }
 
 .dropdown-options div {
-	padding: 8px;
-	cursor: pointer;
+    padding: 8px;
+    cursor: pointer;
 }
 
 .screen .dropdown-options div,
 .screen .dropdown-options li{
-	padding: 8px;
-	cursor: pointer;
-	list-style: none;
+    padding: 8px;
+    cursor: pointer;
+    list-style: none;
 }
 
 .dropdown-options div:hover {
-	background: rgb(37 150 190);
+    background: rgb(37 150 190);
 }
 
 .screen .dropdown-options div:hover,
 .screen .dropdown-options li:hover {
-	background: #f0f0f0;
+    background: #f0f0f0;
 }
 
 #step1 {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
 }
 
 .step1-left-panel {
-	display: flex;
-	flex-direction: column;
-	gap: 1.5rem;
-	align-items: center;
-	background-color: white;
-	padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    background-color: white;
+    padding: 40px;
 }
 
 .step1-heading,
 .step4-heading {
-	font-size: 24px;
-	font-weight: bold;
-	text-align: center;
-	margin-bottom: 0;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0;
 }
 
 .step1-heading {
-	max-width: 270px;
+    max-width: 270px;
 }
 
 .step4-heading {
-	max-width: 100%;
-	margin-bottom: 20px;
+    max-width: 100%;
+    margin-bottom: 20px;
 }
 
 .step1-input-group {
-	width: 100%;
-	position: relative;
-	max-width: 350px;
+    width: 100%;
+    position: relative;
+    max-width: 350px;
 }
 
 .mapping-fields-group label {
-	font-weight: bold;
-	font-size: 14px;
-	color: #333;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
 }
 
 .mapping-radio-group label {
-	display: flex;
-	align-items: center;
-	font-size: 1rem;
-	font-weight: 500;
-	cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 #step1 label {
-	display: block;
-	font-size: 20px;
-	font-weight: 500;
-	margin-bottom: 8px;
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 8px;
 }
 
 .test-to-live-switch input {
-	opacity: 0;
-	width: 0;
-	height: 0;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 .single-sided-radio-wrap input,
 .double-sided-radio-wrap input {
-	margin: 0;
+    margin: 0;
 }
 
 .mapping-radio-group input {
-	display: none;
+    display: none;
 }
 
 #step1 input {
-	width: 100%;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 #step1 input:focus {
-	border-color: #a0a0a0;
-	outline: none;
+    border-color: #a0a0a0;
+    outline: none;
 }
 
 .step1-right-panel {
-	background-image: url("../images/loginScreen.jpg");
-	background-size: cover;
-	background-position: center;
+    background-image: url("../images/loginScreen.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
 .toggle-password {
-	position: absolute;
-	right: 2%;
-	top: 49px;
-	transform: translateY(-50%);
-	cursor: pointer;
-	user-select: none;
+    position: absolute;
+    right: 2%;
+    top: 49px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
 }
 
 .second-step {
-	display: grid;
-	grid-template-columns: 1fr auto;
-	gap: 10px;
-	padding: 44px;
-	align-items: start;
-	position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding: 44px;
+    align-items: start;
+    position: relative;
 }
 
 .left-box {
-	display: flex;
-	flex-direction: column;
-	gap: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
 }
 
 .section-label {
-	font-weight: 600;
-	user-select: none;
-  margin: 0;
-	font-size: var(--heading);
+    font-weight: 600;
+    user-select: none;
+    margin: 0;
+    font-size: var(--heading);
 }
 
 .input-container {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 20px;
-	align-items: center;
-	color: #6b6b6b;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    color: #6b6b6b;
 }
 
 .radio-input {
-	width: 18px;
-	height: 18px;
-	cursor: pointer;
-  margin: 0;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 0;
 }
 
 .radio-label,
 #card-insert-container label,
 #card-insert-type label {
-	font-size: 16px;
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	color: #000;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #000;
 }
 
 #card-insert-container {
-	display: none;
+    display: none;
 }
 
 #card-insert-container.visible {
-	display: flex;
-	align-items: center;
-	gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 #card-insert {
-	width: 18px;
-	height: 18px;
-	cursor: pointer;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
 }
 
 #card-insert-type {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 #card-insert-type.hidden {
-	display: none;
+    display: none;
 }
 
 .message-type-wrapper .input-container,
 .creation-type-wrapper .input-container {
-	margin: 0;
+    margin: 0;
 }
 
 #card-insert-type .input-container {
-	display: flex;
-	align-items: center;
-	gap: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .input-container input[type="radio"] {
-	width: 18px;
-	height: 18px;
+    width: 18px;
+    height: 18px;
 }
 
 .right-box {
-	position: absolute;
-	margin-top: 40px;
-	right: 3%;
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
+    position: absolute;
+    margin-top: 40px;
+    right: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .align-right {
-	font-size: 18px;
-	display: flex;
-	align-items: center;
-	gap: 10px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .test-to-live-switch {
-	position: relative;
-	display: inline-block;
-	width: 50px;
-	height: 24px;
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
 }
 
 .test-to-live-slider {
-  position: absolute;
-  cursor: pointer;
-  inset: 0;
-  background-color: #ccc;
-  transition: 0.4s;
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #ccc;
+    transition: 0.4s;
 }
 
 .test-to-live-slider::before {
-	position: absolute;
-	content: "";
-	height: 20px;
-	width: 20px;
-	left: 3px;
-	bottom: 2px;
-	background-color: white;  
-	transition: 0.4s;
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 2px;
+    background-color: white;  
+    transition: 0.4s;
 }
 
 input:checked + .test-to-live-slider {
-	background-color: #30c8ff;
+    background-color: #30c8ff;
 }
 
 input:focus + .test-to-live-slider {
-	box-shadow: 0 0 1px #30c8ff;
+    box-shadow: 0 0 1px #30c8ff;
 }
 
 input:checked + .test-to-live-slider::before {
-	transform: translateX(24px);
+    transform: translateX(24px);
 }
 
 .test-to-live-slider.round {
-	border-radius: 34px;
+    border-radius: 34px;
 }
 
 .test-to-live-slider.round::before {
-	border-radius: 50%;
+    border-radius: 50%;
 }
 
 .radio-label-wrap {
-	align-items: flex-start;
-	display: flex;
-	gap: 0.5rem;
+    align-items: flex-start;
+    display: flex;
+    gap: 0.5rem;
 }
 
 .radio-label-wrap .radio-input {
-	margin: 0;
+    margin: 0;
 }
 
 .message-type-wrapper,
 .creation-type-wrapper {
-	display: flex;
-	flex-direction: column;
-	gap: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
 .card-insert-wrapper {
-	display: none;
-	flex-direction: column;
-	gap: 1.75rem;
+    display: none;
+    flex-direction: column;
+    gap: 1.75rem;
 }
 
 .card-insert-wrapper.visible {
-	display: flex;
+    display: flex;
 }
 
 .message-label-input-wrap,
 .creation-label-input-wrap {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 #step4 .message-label-input-wrap {
-  align-items: center;
-  gap: 1.5rem;
+    align-items: center;
+    gap: 1.5rem;
 }
 
 .single-sided-radio-wrap,
 .double-sided-radio-wrap {
-	display: flex;
-	gap: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
 }
 
 .container.spacer.html-creation-type,
 .container.spacer.pdf-creation-type,  .trifold .template-creation-type {
-	display: flex;
-	padding: 44px;
+    display: flex;
+    padding: 44px;
 }
 
 .d-none {
-  display: none;
+    display: none;
 }
 
 .size-radio-buttons-wrap .radio-input {
-	width: 1.2rem;
-	height: 1.2rem;
-	margin: 0;
-	vertical-align: text-bottom;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 0;
+    vertical-align: text-bottom;
 }
 
 .express-delivery .checkbox-input, .checkbox-wrap .checkbox-input {
-	margin: 0;
-	vertical-align: text-top;
-	width: 1rem;
-	height: 1rem;
+    margin: 0;
+    vertical-align: text-top;
+    width: 1rem;
+    height: 1rem;
 }
 
 .express-delivery .checkbox-label {
-	font-size: 16px;
-	display: inline-flex;
-	gap: 0.5rem;
-	align-items: center;
+    font-size: 16px;
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 .size-radio-buttons-wrap .radio-buttons {
-	display: flex;
-	gap: 8rem;
-	margin: 0 !important;
+    display: flex;
+    gap: 8rem;
+    margin: 0 !important;
 }
 
 .selfmailer .size-radio-buttons-wrap .radio-buttons {
-	gap: 2rem;
+    gap: 2rem;
 }
 
 .selfmailer-pdf-container .input-fields {
-  justify-content: flex-start;
-  gap: 4rem;
+    justify-content: flex-start;
+    gap: 4rem;
 }
 
 .pdf-container .input-fields {
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
-  gap: 2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
 }
 
 .letters-card-insert .pdf-container .input-fields {
-	justify-content: flex-start;
+    justify-content: flex-start;
 }
 
 .html-screen-wrapper .outer-input-fields .input-fields {
-	display: flex;
-	flex-wrap: wrap;
-  gap: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
 }
 
 .selfmailer .html-screen-wrapper .outer-input-fields .input-fields {
-  flex-direction: column;
+    flex-direction: column;
 }
 
 .html-screen-wrapper .input-fields .input-box {
-	display: flex;
-	flex-direction: column;
-  width: 90%;
-	gap: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 0.25rem;
 }
 
 .pdf-container .input-fields .input-box {
-	display: flex;
-	flex-direction: column;
-  width: 48%;
-	gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    gap: 0.5rem;
 }
 
 .trifold .html-screen-wrapper .input-fields .input-box,
 .selfmailer .html-screen-wrapper .input-fields .input-box {
-	width: 90%;
+    width: 90%;
 }
 
 .letters-card-insert .screen-3 .template-container .input-box {
-  width: 46%;
+    width: 46%;
 }
 
 .letters-card-insert .screen-2 .pdf-container .input-box,
 .letters-card-insert .screen .template-container.template .input-box,
 .letters-card-insert .screen .pdf-container.template .input-box {
-  width: 30%;
+    width: 30%;
 }
 
 .letters-card-insert .screen-2 .pdf-container.html .pdf-screen-wrapper .letter-pdf-fields .input-box {
-  width: 46%;
+    width: 46%;
 }
 
 #letter-screen .html-creation-type .input-fields .input-box {
-  width: 45%;
+    width: 45%;
 }
 
 #letter-screen .pdf-container .input-fields .input-box,
 #letter-screen .template-container .existing-template-details .input-box,
 #letter-card-insert-screen .screen-1 .pdf-container .input-fields .input-box,
 #letter-card-insert-screen .screen-1 .template-container .existing-template-details .input-box {
-  width: 31%;
+    width: 31%;
 }
 
 #letter-card-insert-screen .screen-1 .html-creation-type .input-fields .input-box {
-  width: 45%;
+    width: 45%;
 }
 
 .dropdown-icon-angle-wrap {
-  position: absolute;
-  width: 16px;
-  height: 22px;
-  right: 5px;
-  top: 5px;
-  background: white;
-  pointer-events: none;
+    position: absolute;
+    width: 16px;
+    height: 22px;
+    right: 5px;
+    top: 5px;
+    background: white;
+    pointer-events: none;
 }
 
 .contact-dropdown-container .dropdown-icon-angle-wrap {
-  right: 7rem;
+    right: 7rem;
 }
 
 .checkbox-input:disabled + span,
 .input-field:disabled + .dropdown-icon-angle-wrap,
 .input-field:disabled {
-  color: gray;
-  opacity: 0.6;
+    color: gray;
+    opacity: 0.6;
 }
 
 .html-screen-wrapper .input-fields .input-field {
-	outline: none;
-	border: 3px solid lightgray;
-	border-radius: 3px;
+    outline: none;
+    border: 3px solid lightgray;
+    border-radius: 3px;
 }
 
 .size-radio-buttons-wrap {
-	display: flex;
-	flex-direction: column;
-	gap: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
 }
 
 .size-radio-buttons-wrap .size-radio-label {
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	gap: 8px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 .html-editor-front,
 .html-editor-back, .html-editor-back-card-insert, .html-editor-front-card-insert {
-	display: none;
-	border: 3px solid lightgray;
-	border-radius: 8px;
-	outline: none;
-	resize: none;
-	width: 100%;
-	padding: 10px;
-	padding-top: 3.5rem;
-	line-height: 1.5rem;
-	font-size: 1rem;
-  height: 320px;
+    display: none;
+    border: 3px solid lightgray;
+    border-radius: 8px;
+    outline: none;
+    resize: none;
+    width: 100%;
+    padding: 10px;
+    padding-top: 3.5rem;
+    line-height: 1.5rem;
+    font-size: 1rem;
+    height: 320px;
 }
 
 .html-editor-back.show,
 .html-editor-front.show, .html-editor-back-card-insert.show, .html-editor-front-card-insert.show{
-	display: block;
+    display: block;
 }
 
 .html-screen-wrapper {
-	display: flex;
-	flex-direction: column;
-	gap: 2rem;
-	width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 60%;
 }
 
 .html-editor {
-	position: relative;
-	width: 50%;
-	margin-top: 3rem;
+    position: relative;
+    width: 50%;
+    margin-top: 3rem;
 }
 
 .html-size{
-	display: flex;
-	flex-direction: column;
-	gap: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .html-btn-front {
-	left: 1rem;
-	top: 1.25rem;
+    left: 1rem;
+    top: 1.25rem;
 }
 
 .html-btn-back {
-	left: 6rem;
-	top: 1.25rem;
+    left: 6rem;
+    top: 1.25rem;
 }
 
 .html-btn-card-front{
-	left: 11rem;
-	top: 1.5rem;
+    left: 11rem;
+    top: 1.5rem;
 }
 
 .btn.btn-light.html-btn-front:hover,
 .btn.btn-light.html-btn-back:hover, .btn.btn-light.html-btn-card-front:hover, .btn.btn-light.html-btn-card-back:hover {
-	background: #3B79F0;
+    background: #3B79F0;
 }
 
 .btn.btn-light.html-btn-front.show,
 .btn.btn-light.html-btn-back.show,.btn.btn-light.html-btn-card-front.show, .btn.btn-light.html-btn-card-back.show {
-	background: #2569E6;
+    background: #2569E6;
 }
 
 .html-btn-front,
 .html-btn-back, .html-btn-card-front, .html-btn-card-back {
-	padding: 0.3rem 1rem;
-	border-radius: 4px;
-	border: none;
-	font-weight: 500;
-	cursor: pointer;
-	background: #4D8CFF;
-  color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 4px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    background: #4D8CFF;
+    color: white;
 }
 
 .letters-card-insert .html-btn-front,
 .letters-card-insert .html-btn-back, .letters-card-insert .html-btn-card-front, .letters-card-insert .html-btn-card-back {
-  position: unset;
+    position: unset;
 }
 
 .trifold .screen-1 .btn{
-	position: static;
+    position: static;
 }
 
 .checkbox-wrap .checkbox-label {
-  display: flex;
-  gap: 0.5rem;
-  width: fit-content;
+    display: flex;
+    gap: 0.5rem;
+    width: fit-content;
 }
 
 .screen-1 .radio-buttons .radio-label,
 .screen-1 .checkboxes .checkbox-label {
-	font-size: 16px;
+    font-size: 16px;
 }
 
 .error-msg {
-	color: red;
-	display: none;
-	font-size: 16px;
+    color: red;
+    display: none;
+    font-size: 16px;
 }
 
 .error-msg.show {
-	display: block;
+    display: block;
 }
 
 .dropdown-wrap .error-msg {
-  margin-left: -70px;
-  margin-top: 4px;
+    margin-left: -70px;
+    margin-top: 4px;
 }
 
 .error {
-	border-color: red !important;
-	border-width: 1px !important;
+    border-color: red !important;
+    border-width: 1px !important;
 }
 
 .screen-2 .spacer {
-	padding: 44px;
+    padding: 44px;
 }
 
 .pdf-container, .template-container {
-	display: flex;
-	flex-direction: column;
-	gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .pdf-container.html {
-  flex-direction: row;
+    flex-direction: row;
 }
 
 .pdf-size, .pdf-card-size {
-	display: flex;
-	flex-direction: column;
-	gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .upload-box {
-	border-radius: 2px;
-	padding: 20px;
-	text-align: center;
-	cursor: pointer;
-	position: relative;
-	background-color: lightgray;
-	height: 80px;
+    border-radius: 2px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    background-color: lightgray;
+    height: 80px;
 }
 
 .hidden {
-	display: none;
+    display: none;
 }
 
 label[for="postcard-pdf-upload"],
 label[for="self-mailer-pdf-upload"] {
-	display: flex;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	right: 0;
-	align-items: center;
-	justify-content: center;
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
 }
 
 .remove-pdf {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .pdf-error {
-	position: absolute;
-	bottom: -20%;
-	left: 0;
+    position: absolute;
+    bottom: -20%;
+    left: 0;
 }
 
 #step4-heading {
-	margin: 0;
+    margin: 0;
 }
 
 .mapping-container {
-	display: flex;
-	align-items: flex-start;
-	justify-content: center;
-	padding: 44px;
-	gap: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 44px;
+    gap: 20px;
 }
 
 .sender-contact-container,
 .receiver-contact-contact {
-	flex: 1;
-	background: white;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+    flex: 1;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .mapping-radio-group {
-	display: flex;
-	gap: 15px;
-	align-items: center;
-	margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .mapping-radio {
-	width: 16px;
-	height: 16px;
-	border-radius: 50%;
-	border: 2px solid #ccc;
-	display: inline-block;
-	margin-right: 5px;
-	position: relative;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: inline-block;
+    margin-right: 5px;
+    position: relative;
 }
 
 .mapping-radio-group input:checked + .mapping-radio {
-	border-color: #007bff;
-	background: #007bff;
+    border-color: #007bff;
+    background: #007bff;
 }
 
 #step4 label {
-	font-size: 1rem;
-	font-weight: 500;
-	margin-bottom: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 5px;
 }
 
 .mapping-divider {
-	width: 1px;
-	background: #cce4ff;
-	height: 100vh;
-	min-height: 250px;
+    width: 1px;
+    background: #cce4ff;
+    height: 100vh;
+    min-height: 250px;
 }
 
 .mapping-fields-group {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
 }
 
 .mapping-fields, .create-contact .error-msg,
 .error-message-contact-mapping {
-	width: 80%;
-	margin: auto;
+    width: 80%;
+    margin: auto;
 }
 
 #search-contact:focus {
-	border-color: #a0a0a0;
-	outline: none;
+    border-color: #a0a0a0;
+    outline: none;
 }
 
 .mapping-fields-group select {
-	border: 2px solid #ccc;
-	outline: none;
+    border: 2px solid #ccc;
+    outline: none;
 }
 
 #step5 #pdf-preview {
-  height: 450px;
-  width: 100%;
-  zoom: 1;
-  transform: scale(1);
-  transform-origin: 0 0;
+    height: 450px;
+    width: 100%;
+    zoom: 1;
+    transform: scale(1);
+    transform-origin: 0 0;
 }
 
 #step5 {
@@ -1059,14 +1086,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .screen .spacer .html-btn-wrap,
 .container.spacer.html-creation-type .html-btn-wrap,
 .container.spacer.pdf-creation-type .html-btn-wrap {
-  position: absolute;
-  width: 94%;
-  background: white;
-  padding: 1.5rem 0.75rem 0.2rem;
-  top: 2px;
-  border-top: 1px solid lightgray;
-  left: 4px;
-  border-radius: 0;
+    position: absolute;
+    width: 94%;
+    background: white;
+    padding: 1.5rem 0.75rem 0.2rem;
+    top: 2px;
+    border-top: 1px solid lightgray;
+    left: 4px;
+    border-radius: 0;
 }
 
 .retry-preview-btn.show {
@@ -1083,12 +1110,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .dropdown-icon {
-  position: absolute;
-  right: 4px;
-  top: 3px;
-  transform: rotate(90deg);
-  pointer-events: none;
-  font-weight: bold;
+    position: absolute;
+    right: 4px;
+    top: 3px;
+    transform: rotate(90deg);
+    pointer-events: none;
+    font-weight: bold;
 }
 
 .contact-dropdown-wrap .dropdown-icon {
@@ -1115,15 +1142,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .retry-preview-btn {
-  display: none;
-  background: rgb(0 118 222);
-  color: white;
-  border: none;
-  padding: 0.5rem 2rem;
-  height: auto;
-  border-radius: 30px;
-  margin-top: 10px;
-  font-size: 22px;
+    display: none;
+    background: rgb(0 118 222);
+    color: white;
+    border: none;
+    padding: 0.5rem 2rem;
+    height: auto;
+    border-radius: 30px;
+    margin-top: 10px;
+    font-size: 22px;
 }
 
 .preview-message {
@@ -1135,42 +1162,42 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .loader.show {
-  border: 8px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 8px solid #3498db;
-  width: 24px;
-  height: 24px;
-  animation: spin 2s linear infinite;
-  }
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #3498db;
+    width: 24px;
+    height: 24px;
+    animation: spin 2s linear infinite;
+}
   
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .error-toast-wrap {
-  display: none;
-  color: white;
-  padding: 1rem;
-  width: 97%;
-  border-radius: 4px;
-  background-color: rgba(255 0 0 / 75%);
-  gap: 1rem;
+    display: none;
+    color: white;
+    padding: 1rem;
+    width: 97%;
+    border-radius: 4px;
+    background-color: rgba(255 0 0 / 75%);
+    gap: 1rem;
 }
 
 .error-toast-wrap.show {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .remove-error-toast {
-  height: fit-content;
-  cursor: pointer;
+    height: fit-content;
+    cursor: pointer;
 }
 
 #step4 {
-  position: relative;
+    position: relative;
 }
 
 .activity-loader {
@@ -1187,124 +1214,124 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .activity-loader.show {
-  display: inline-block;
+    display: inline-block;
 }
 
 .loader-overlay {
-  display: none;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1048px;
-  height: 500px;
-  background: rgb(255 255 255);
-  opacity: 0.75;
-  z-index: 1;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1048px;
+    height: 500px;
+    background: rgb(255 255 255);
+    opacity: 0.75;
+    z-index: 1;
 }
 
 .loader-overlay.show {
-  display: block;
+    display: block;
 }
 
 .checkboxes-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 1.75rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 1.75rem;
 }
 
 .pdf-container .checkboxes-container, 
 .template-container .checkboxes-container {
-  display: flex;
-  column-gap: 3rem;
+    display: flex;
+    column-gap: 3rem;
 }
 
 .letter-pdf-fields, .letter-template-fields, .letter-card-insert-template-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
 }
 
 .asterisk {
-  color: red;
+    color: red;
 }
 
 .extra-service, .envelope-type {
-  width: 100%;
+    width: 100%;
 }
 
 .extra-service-list .dropdown-item:first-child,
 .envelope-type-list .dropdown-item:first-child,
 .placeholder-style  {
-  color: grey;
+    color: grey;
 }
 
 .letters-card-insert .screen-3 .spacer,
 .letters-card-insert .screen-3 .template-container {
-  flex-direction: row;
+    flex-direction: row;
 }
 
 .letters-card-insert .screen-3 .template-container.html .template-screen-wrapper,
 .letters-card-insert .screen-3 .template-container.template .template-screen-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .letters-card-insert .screen-3 .template-container.html .template-screen-wrapper {
-  width: 61%;
+    width: 61%;
 }
 
 .pdf-container.html .checkboxes-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 1.75rem;
-  column-gap: unset;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 1.75rem;
+    column-gap: unset;
 }
 
 .letters-card-insert .screen-3 .template-container .checkboxes-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 1.75rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 1.75rem;
 }
 
 .letters-card-insert .screen-3 .template-container .letter-card-insert-template-fields,
 .letters-card-insert .screen-2 .pdf-container .letter-pdf-fields  {
-  gap: 2.5rem;
+    gap: 2.5rem;
 }
 
 .letters-card-insert .screen .template-container.template,
 .letters-card-insert .screen .pdf-container.template {
-  width: 100%;
+    width: 100%;
 }
 
 .letters-card-insert .screen .template-container.template .checkboxes-container,
 .letters-card-insert .screen .pdf-container.template .checkboxes-container {
-  grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .card-insert-input.hidden {
-  display: none !important;
+    display: none !important;
 }
 
 .pdf-screen-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .pdf-container.html .pdf-screen-wrapper {
-  width: 60%;
+    width: 60%;
 }
 
 .extra-service-dropdown-wrap,
 .envelope-type-dropdown-wrap {
-  cursor: default;
+    cursor: default;
 }
 
 .letter-card-insert-template-container .checkboxes-container .checkbox-wrap .checkbox-label {
-  width: max-content;
+    width: max-content;
 }
 
 .contact-option-wrapper .hidden {
-  display: none;
+    display: none;
 }

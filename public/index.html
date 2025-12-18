@@ -6,17 +6,9 @@
     <title>Custom Journey Builder Activity</title>
     <script type="text/javascript" src="./js/jquery.min.js"></script>
     <script type="text/javascript" src="./js/require.js"></script>
-    <script type="text/javascript">
-        (function () {
-            var config = {
-                baseUrl: "js",
-            };
+    
+    <script type="text/javascript" src="./js/loader.js"></script>
 
-            var dependencies = ["customActivity"];
-
-            require(config, dependencies);
-        })();
-    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -25,7 +17,7 @@
     <link rel="stylesheet" href="./css/style.css" />
 </head>
 
-<body style="overflow: hidden;">
+<body class="hidden-overflow">
     <div id="step1" class="step">
         <div class="loader-overlay show"></div>
         <div class="activity-loader"></div>
@@ -35,14 +27,14 @@
                 <label for="test-api-key">Test Api Key <span class="asterisk">*</span></label>
                 <input type="password" id="test-api-key" class="api-key" placeholder="Enter test API key" required />
                 <span class="toggle-password" id="toggle-password-test-key"><i class="fa fa-eye-slash"></i></span>
-                <span class="error-message" id="test-api-key-error" style="color: red; display: none">Missing or invalid
+                <span class="error-message" id="test-api-key-error">Missing or invalid
                     authentication.</span>
             </div>
             <div class="step1-input-group">
                 <label for="live-api-key">Live Api Key</label>
                 <input type="password" id="live-api-key" class="api-key" placeholder="Enter live API key" />
                 <span class="toggle-password" id="toggle-password-live-key"><i class="fa fa-eye-slash"></i></span>
-                <span class="error-message" id="live-api-key-error" style="color: red; display: none">Missing or invalid
+                <span class="error-message" id="live-api-key-error">Missing or invalid
                     authentication.</span>
             </div>
         </div>
@@ -154,7 +146,7 @@
                     <label for="testMode" class="slider-label">Live Mode</label>
                 </div>
             </div>
-            <p id="liveModeError" style="color: red; display: none; font-size: 16px; margin-top: 30px;">
+            <p id="liveModeError" class="live-mode-error">
                 Live API key is required to enable live mode.
             </p>
         </div>
@@ -2193,7 +2185,7 @@
                         </select>
                     </div>
                 </div>
-                <span class="error-message-contact-mapping" style="display: block;"></span>
+                <span class="error-message-contact-mapping block-display"></span>
             </div>
         </div>
     </div>
@@ -2203,8 +2195,8 @@
             <div class="preview-container">
                 <div class="section-label">Preview</div>
                 <div class="preview-box">
-                    <div id="pdf-preview-container" style="display: none;">
-                        <iframe id="pdf-preview" style="border: 1px solid #ccc; width: 100%; height: 500px;"></iframe>
+                    <div id="pdf-preview-container" class="hidden-display">
+                        <iframe id="pdf-preview" class="preview-iframe"></iframe>
                     </div>
                     <div class="retry-btn-wrap">
                         <div class="preview-message">
