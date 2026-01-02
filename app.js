@@ -12,8 +12,9 @@ app.disable('x-powered-by');
 // SECURITY HEADERS (Strict Configuration)
 app.use(
   helmet({
-    // Security: Protects against Clickjacking
-    frameguard: { action: "sameorigin" },
+    // FIX: Disable frameguard because it conflicts with cross-origin framing.
+    // We rely on CSP frameAncestors below for this security instead.
+    frameguard: false,
 
     // Security: Enforces HTTPS connections
     hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
@@ -27,7 +28,7 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         
-        // Allow scripts only from trusted domains (No unsafe-inline/eval)
+        // Allow scripts only from trusted domains
         scriptSrc: [
           "'self'",
           "https://*.marketingcloudapps.com",
@@ -44,7 +45,8 @@ app.use(
           "'self'",
           "https://*.marketingcloudapps.com",
           "https://fonts.googleapis.com",
-          "https://cdnjs.cloudflare.com"
+          "https://cdnjs.cloudflare.com",
+          "'unsafe-inline'" // Often needed for FontAwesome/Google Fonts to load correctly
         ],
         
         // Allow images and blobs
@@ -63,11 +65,13 @@ app.use(
           "https://api.postgrid.com"
         ],
         
-        // Security: Critical for embedding inside Salesforce
+        // FIX: Critical for embedding inside Salesforce Journey Builder
+        // Added exacttarget.com and retained others
         frameAncestors: [
           "'self'",
           "https://*.marketingcloudapps.com",
-          "https://*.salesforce.com"
+          "https://*.salesforce.com",
+          "https://*.exacttarget.com"
         ],
         
         fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
