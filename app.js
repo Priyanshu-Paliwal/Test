@@ -6,17 +6,20 @@ const activity = require('./routes/activity');
 
 const app = express();
 
+// FIX 1: Trust Railway's proxy. 
+// This fixes the "Strict-Transport-Security Header Not Set" ZAP alert.
+app.enable('trust proxy');
+
 // Security: Hide technical stack details from the header
 app.disable('x-powered-by');
 
 // SECURITY HEADERS (Strict Configuration)
 app.use(
   helmet({
-    // FIX: Disable frameguard because it conflicts with cross-origin framing.
-    // We rely on CSP frameAncestors below for this security instead.
+    // Security: Disable frameguard (we use CSP frameAncestors instead)
     frameguard: false,
 
-    // Security: Enforces HTTPS connections
+    // Security: Enforces HTTPS connections (HSTS)
     hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
 
     // Security: Prevents MIME-type sniffing
@@ -40,13 +43,13 @@ app.use(
           "https://cdn.jsdelivr.net"
         ],
         
-        // Allow styles from Google Fonts and Salesforce
+        // FIX 2: Removed 'unsafe-inline' to fix the ZAP Medium Alert.
+        // Ensure all your styles are in external CSS files!
         styleSrc: [
           "'self'",
           "https://*.marketingcloudapps.com",
           "https://fonts.googleapis.com",
-          "https://cdnjs.cloudflare.com",
-          "'unsafe-inline'" // Often needed for FontAwesome/Google Fonts to load correctly
+          "https://cdnjs.cloudflare.com"
         ],
         
         // Allow images and blobs
@@ -65,8 +68,7 @@ app.use(
           "https://api.postgrid.com"
         ],
         
-        // FIX: Critical for embedding inside Salesforce Journey Builder
-        // Added exacttarget.com and retained others
+        // Security: Critical for embedding inside Salesforce Journey Builder
         frameAncestors: [
           "'self'",
           "https://*.marketingcloudapps.com",
