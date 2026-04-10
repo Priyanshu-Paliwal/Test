@@ -166,7 +166,8 @@ exports.fetchClientCredentials = async function (req, res) {
     });
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error.toString());
+    // FIX: Do not expose raw error stack to clients
+    res.status(500).json({ error: 'Failed to fetch client credentials' });
   }
 };
 
@@ -212,7 +213,8 @@ exports.fetchExternalKey = async function (req, res) {
     });
     res.send(response.data);
   } catch (error) {
-    res.status(500).send(error.toString());
+    // FIX: Do not expose raw error stack to clients
+    res.status(500).json({ error: 'Failed to fetch external key' });
   }
 };
 

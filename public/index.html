@@ -3,6 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="robots" content="noindex, nofollow" />
     <title>Custom Journey Builder Activity</title>
     <script type="text/javascript" src="./js/jquery.min.js"></script>
     <script type="text/javascript" src="./js/require.js"></script>
@@ -2193,7 +2197,9 @@
                 <div class="section-label">Preview</div>
                 <div class="preview-box">
                     <div id="pdf-preview-container" class="hidden-display">
-                        <iframe id="pdf-preview" class="preview-iframe"></iframe>
+                        <iframe id="pdf-preview" class="preview-iframe"
+                            sandbox="allow-scripts allow-same-origin"
+                            referrerpolicy="no-referrer"></iframe>
                     </div>
                     <div class="retry-btn-wrap">
                         <div class="preview-message">
