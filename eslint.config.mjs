@@ -1,8 +1,11 @@
 export default [
   // ESLint recommended configuration directly added to the array
   {
-    ignores: ['public/js/require.js',
-      'public/js/postmonger.js'
+    ignores: [
+      'public/js/require.js',
+      'public/js/postmonger.js',
+      'public/js/jquery.min.js',
+      'public/js/loader.js'
     ],
     languageOptions: {
       parserOptions: {
@@ -10,6 +13,7 @@ export default [
         sourceType: 'module',
       },
       globals: {
+        console: 'readonly',
         require: 'readonly',
         exports: 'readonly',
         module: 'readonly',
