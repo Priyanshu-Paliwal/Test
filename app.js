@@ -35,62 +35,62 @@ app.use(
     contentSecurityPolicy: {
       useDefaults: false,
       directives: {
-        defaultSrc: ["'self'"],
+        defaultSrc: ['\'self\''],
 
         // Allow scripts only from trusted domains
         scriptSrc: [
-          "'self'",
-          "https://*.marketingcloudapps.com",
-          "https://*.exacttarget.com",
-          "https://*.postgrid.com",
-          "https://*.salesforce.com",
-          "https://code.jquery.com",
-          "https://cdnjs.cloudflare.com",
-          "https://cdn.jsdelivr.net"
+          '\'self\'',
+          'https://*.marketingcloudapps.com',
+          'https://*.exacttarget.com',
+          'https://*.postgrid.com',
+          'https://*.salesforce.com',
+          'https://code.jquery.com',
+          'https://cdnjs.cloudflare.com',
+          'https://cdn.jsdelivr.net'
         ],
 
         // Styles from trusted domains only (no unsafe-inline)
         styleSrc: [
-          "'self'",
-          "https://*.marketingcloudapps.com",
-          "https://fonts.googleapis.com",
-          "https://cdnjs.cloudflare.com"
+          '\'self\'',
+          'https://*.marketingcloudapps.com',
+          'https://fonts.googleapis.com',
+          'https://cdnjs.cloudflare.com'
         ],
 
         // Allow images and blobs
         imgSrc: [
-          "'self'",
-          "data:",
-          "blob:",
-          "https://*.marketingcloudapps.com",
-          "https://*.postgrid.com"
+          '\'self\'',
+          'data:',
+          'blob:',
+          'https://*.marketingcloudapps.com',
+          'https://*.postgrid.com'
         ],
 
         // Allow API connections to PostGrid backend
         connectSrc: [
-          "'self'",
-          "https://*.marketingcloudapps.com",
-          "https://api.postgrid.com"
+          '\'self\'',
+          'https://*.marketingcloudapps.com',
+          'https://api.postgrid.com'
         ],
 
         // Security: Critical for embedding inside Salesforce Journey Builder
         frameAncestors: [
-          "'self'",
-          "https://*.marketingcloudapps.com",
-          "https://*.salesforce.com",
-          "https://*.exacttarget.com"
+          '\'self\'',
+          'https://*.marketingcloudapps.com',
+          'https://*.salesforce.com',
+          'https://*.exacttarget.com'
         ],
 
         // Allow iframes only from PostGrid (for PDF preview)
-        frameSrc: ["'self'", "https://*.postgrid.com"],
+        frameSrc: ['\'self\'', 'https://*.postgrid.com'],
 
-        fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
-        objectSrc: ["'none'"],
-        baseUri: ["'self'"],
-        workerSrc: ["'none'"],
+        fontSrc: ['\'self\'', 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
+        objectSrc: ['\'none\''],
+        baseUri: ['\'self\''],
+        workerSrc: ['\'none\''],
 
         // Security: Restrict where forms can be submitted
-        formAction: ["'self'"],
+        formAction: ['\'self\''],
         upgradeInsecureRequests: [],
       },
     },
