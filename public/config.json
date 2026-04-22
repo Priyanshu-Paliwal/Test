@@ -7,7 +7,7 @@
   "type": "REST",
   "lang": {
     "en-US": {
-      "name": "PostGrid Aryan",
+      "name": "PostGrid",
       "description": "Send letter and postcard from journey Builder using postgrid platform"
     }
   },

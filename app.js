@@ -32,6 +32,7 @@ app.use(
     permittedCrossDomainPolicies: { permittedPolicies: 'none' },
 
     // Security: Content Security Policy (CSP) to block malicious scripts
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
     contentSecurityPolicy: {
       useDefaults: false,
       directives: {
@@ -49,9 +50,10 @@ app.use(
           'https://cdn.jsdelivr.net'
         ],
 
-        // Styles from trusted domains only (no unsafe-inline)
+        // Styles from trusted domains only and unsafe-inline to fix jQuery display toggling
         styleSrc: [
           '\'self\'',
+          '\'unsafe-inline\'',
           'https://*.marketingcloudapps.com',
           'https://fonts.googleapis.com',
           'https://cdnjs.cloudflare.com'
@@ -82,7 +84,12 @@ app.use(
         ],
 
         // Allow iframes only from PostGrid (for PDF preview)
-        frameSrc: ['\'self\'', 'https://*.postgrid.com'],
+        frameSrc: [
+          '\'self\'',
+          'blob:',
+          'https://*.postgrid.com',
+          'https://*.amazonaws.com'
+        ],
 
         fontSrc: ['\'self\'', 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
         objectSrc: ['\'none\''],
