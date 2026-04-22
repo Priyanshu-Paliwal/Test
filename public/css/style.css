@@ -20,6 +20,9 @@ body {
 .block-display {
     display: block !important;
 }
+span.block-display, i.block-display, a.block-display, button.block-display, label.block-display {
+    display: inline-block !important;
+}
 
 .text-danger {
     color: red !important;
