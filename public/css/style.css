@@ -18,7 +18,11 @@ body {
 }
 
 .block-display {
-    display: block;
+    display: block !important;
+}
+
+.text-danger {
+    color: red !important;
 }
 
 .preview-iframe {

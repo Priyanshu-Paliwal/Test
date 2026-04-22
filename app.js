@@ -50,10 +50,9 @@ app.use(
           'https://cdn.jsdelivr.net'
         ],
 
-        // Styles from trusted domains only and unsafe-inline to fix jQuery display toggling
+        // Styles from trusted domains only (unsafe-inline removed for ZAP compliance)
         styleSrc: [
           '\'self\'',
-          '\'unsafe-inline\'',
           'https://*.marketingcloudapps.com',
           'https://fonts.googleapis.com',
           'https://cdnjs.cloudflare.com'

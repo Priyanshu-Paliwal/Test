@@ -342,9 +342,9 @@ define([
         }
 
         if (isCartInsertEnabled) {
-          $('.trifold .doubleSide, .trifold .singleSide').hide();
+          $('.trifold .doubleSide, .trifold .singleSide').addClass('hidden-display').removeClass('block-display');
           let selectedCardType = $('input[name="cardType"]:checked').val();
-          $(`.trifold .${selectedCardType}`).show();
+          $(`.trifold .${selectedCardType}`).removeClass('hidden-display').addClass('block-display');
           if(selectedMessageType === 'LettersCardInsert') {
             if(previewPayload.cardInsertDesignFormat !== selectedCardInsertDesignFormat || previewPayload.cardInsertLayout !== selectedCardType) {
               previewPayload.cardInsertDesignFormat = selectedCardInsertDesignFormat;
@@ -385,10 +385,10 @@ define([
         if(isCartInsertEnabled){
           let selectedCardInsertType = $('input[name="cardType"]:checked').val();
           if(selectedCardInsertType === 'singleSide'){
-            $(`.${selectedMessageType} .html-editor .singleSided-hide`).hide();
+            $(`.${selectedMessageType} .html-editor .singleSided-hide`).addClass('hidden-display').removeClass('block-display');
             $('.trifold .html-btn-card-front').text('Card Insert');
           }else{
-            $(`.${selectedMessageType} .html-editor .singleSided-hide`).show();
+            $(`.${selectedMessageType} .html-editor .singleSided-hide`).removeClass('hidden-display').addClass('block-display');
             $('.trifold .html-btn-card-front').text('Card Inside');
           }
         }
@@ -423,7 +423,7 @@ define([
 
     case 'step3':
       prepopulateToDeMapping();
-      $('#dropdown-options').hide();
+      $('#dropdown-options').addClass('hidden-display').removeClass('block-display');
       validateStep3()
         .then((isValid) => {
           isValid ? proceedToNext() : handleValidationFailure();
@@ -478,17 +478,17 @@ define([
 
   function showStep(step) {
     currentStep = step;
-    $('.step').hide();
+    $('.step').addClass('hidden-display').removeClass('block-display');
     switch (currentStep.key) {
     case 'step1':
-      $('#step1').show();
+      $('#step1').removeClass('hidden-display').addClass('block-display');
       connection.trigger('updateButton', {
         button: 'back',
         visible: false,
       });
       break;
     case 'step2':
-      $('#step2').show();
+      $('#step2').removeClass('hidden-display').addClass('block-display');
       connection.trigger('updateButton', {
         button: 'back',
         visible: true,
@@ -500,7 +500,7 @@ define([
       });
       break;
     case 'step3':
-      $('#step3').show();
+      $('#step3').removeClass('hidden-display').addClass('block-display');
       connection.trigger('updateButton', {
         button: 'back',
         visible: true,
@@ -512,7 +512,7 @@ define([
       });
       break;
     case 'step4':
-      $('#step4').show();
+      $('#step4').removeClass('hidden-display').addClass('block-display');
       connection.trigger('updateButton', {
         button: 'back',
         visible: true,
@@ -524,7 +524,7 @@ define([
       });
       break;
     case 'step5':
-      $('#step5').show();
+      $('#step5').removeClass('hidden-display').addClass('block-display');
       connection.trigger('updateButton', {
         button: 'back',
         visible: true,
@@ -796,15 +796,15 @@ define([
 
     if (testApiKey === '') {
       $('#test-api-key').css('border', '1px solid red');
-      $('#test-api-key-error').text('Missing or invalid authentication').show();
+      $('#test-api-key-error').text('Missing or invalid authentication').removeClass('hidden-display').addClass('block-display');
       isValid = false;
     } else if (!regexForTestApiKey.test(testApiKey)) {
       $('#test-api-key').css('border', '1px solid red');
-      $('#test-api-key-error').text(`Invalid API key: ${testApiKey}`).show();
+      $('#test-api-key-error').text(`Invalid API key: ${testApiKey}`).removeClass('hidden-display').addClass('block-display');
       isValid = false;
     } else {
       previewPayload.test_api_key = testApiKey;
-      $('#test-api-key-error').hide();
+      $('#test-api-key-error').addClass('hidden-display').removeClass('block-display');
       $('#test-api-key').css('border', '');
     }
 
@@ -812,7 +812,7 @@ define([
     if (liveApiKey !== '') {
       if (!regexForLiveApiKey.test(liveApiKey)) {
         $('#live-api-key').css('border', '1px solid red');
-        $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).show();
+        $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).removeClass('hidden-display').addClass('block-display');
         isValid = false;
         previewPayload.live_api_key = '';
       }
@@ -821,7 +821,7 @@ define([
   }
   
   function hideError() {
-    $(this).css('border', '').siblings('.error-message').hide();
+    $(this).css('border', '').siblings('.error-message').addClass('hidden-display').removeClass('block-display');
   }
 
   function validateStep2() {
@@ -845,9 +845,9 @@ define([
     }
 
     if (!errorMessages.length) {
-      $('#step2-error').hide();
+      $('#step2-error').addClass('hidden-display').removeClass('block-display');
     } else {
-      $('#step2-error').html(errorMessages.join('<br>')).show();
+      $('#step2-error').html(errorMessages.join('<br>')).removeClass('hidden-display').addClass('block-display');
     }
 
     return isValid;
@@ -892,8 +892,8 @@ define([
         $('.card-insert-creation-type-wrapper').removeClass('hidden');
         let selectedMessageType = $('input[name="msgType"]:checked').val();
         if(selectedMessageType === 'selfmailer') {
-          $('#extTempId').css('display','none');
-          $('label[for="extTempId"]').css('display','none');
+          $('#extTempId').addClass('hidden-display').removeClass('block-display');
+          $('label[for="extTempId"]').addClass('hidden-display').removeClass('block-display');
           $('#extTempId').prop('checked', false);
         }
         $('#single-sided').prop('checked', true);
@@ -1831,12 +1831,12 @@ define([
     try {
       if (!isRetry) {
         $('#pdf-preview').attr('src', '');
-        $('#pdf-preview-container').hide();
-        $('.preview-message').html('<div>Review your mail piece before sending!</div><div>Click the button below to check the preview.</div>').show();
+        $('#pdf-preview-container').addClass('hidden-display').removeClass('block-display');
+        $('.preview-message').html('<div>Review your mail piece before sending!</div><div>Click the button below to check the preview.</div>').removeClass('hidden-display').addClass('block-display');
       }
   
       $('.retry-btn-wrap .loader').addClass('show');
-      $('.retry-preview-btn').hide();
+      $('.retry-preview-btn').addClass('hidden-display').removeClass('block-display');
       const messageDetails = await fetchMessageDetails(messageId);
       const pdfUrl = messageDetails.url;
   
@@ -1849,20 +1849,20 @@ define([
   
         $('.retry-preview-btn').off('click').on('click', function () {
           $('#pdf-preview').attr('src', pdfUrl + '#toolbar=0&navpanes=0');
-          $('#pdf-preview-container').show();
-          $('.retry-preview-btn, .preview-message').hide();
+          $('#pdf-preview-container').removeClass('hidden-display').addClass('block-display');
+          $('.retry-preview-btn, .preview-message').addClass('hidden-display').removeClass('block-display');
         });
       } else  {
         const elapsedTime = Date.now() - startTime;
         if (elapsedTime >= 60000 || retryOnce) {
           $('.retry-btn-wrap .loader').removeClass('show');
-          $('.preview-message').html('<div>Failed to load the preview after several attempts.</div> <div>To try again, click the retry button.</div>').show();
-          $('.retry-preview-btn').text('Retry').show();
+          $('.preview-message').html('<div>Failed to load the preview after several attempts.</div> <div>To try again, click the retry button.</div>').removeClass('hidden-display').addClass('block-display');
+          $('.retry-preview-btn').text('Retry').removeClass('hidden-display').addClass('block-display');
           return;
         }
 
-        $('#pdf-preview-container, .retry-preview-btn').hide();
-        $('.preview-message').show();
+        $('#pdf-preview-container, .retry-preview-btn').addClass('hidden-display').removeClass('block-display');
+        $('.preview-message').removeClass('hidden-display').addClass('block-display');
         $('.retry-btn-wrap .loader').addClass('show');
   
         setTimeout(() => {
@@ -1870,8 +1870,8 @@ define([
         }, 2000);
       }
     } catch {
-      $('#pdf-preview-container, .retry-preview-btn').hide();
-      $('.preview-message').html('<div>An error occurred while loading the preview.</div>').show();
+      $('#pdf-preview-container, .retry-preview-btn').addClass('hidden-display').removeClass('block-display');
+      $('.preview-message').html('<div>An error occurred while loading the preview.</div>').removeClass('hidden-display').addClass('block-display');
     }
   }  
 
@@ -1889,7 +1889,7 @@ define([
     } catch {
       handleValidationFailure();
       $('.preview-container .retry-preview-btn').addClass('show');
-      $('#pdf-preview-container').css('display','none');
+      $('#pdf-preview-container').addClass('hidden-display').removeClass('block-display');
       $('.pdf-preview-error-msg').text('Failed to fetch preview.');
     }
   }
@@ -1994,7 +1994,7 @@ define([
           });
         }
 
-        $('#dropdown-options').show();
+        $('#dropdown-options').removeClass('hidden-display').addClass('block-display');
       },
       error: function (error) {
         throw error;
@@ -2099,7 +2099,7 @@ define([
     });
 
     if (isAnyFieldEmpty) {
-      $('.error-message-contact-mapping').text('Please fill all required fields.').css('color', 'red').show();
+      $('.error-message-contact-mapping').text('Please fill all required fields.').addClass('text-danger').removeClass('hidden-display').addClass('block-display');
       isValid = false;
     }
     return isValid;
@@ -2111,7 +2111,7 @@ define([
     $('.error-toast-wrap').removeClass('show');
     $('.error-toast-message').text('');
     $('.mapping-fields-group select').css('border', '');
-    $('.error-message-contact-mapping').text('').hide();
+    $('.error-message-contact-mapping').text('').addClass('hidden-display').removeClass('block-display');
     const newContactFieldWrap = $('.sender-contact-container .create-contact .mapping-fields');
     newContactFieldWrap.find('input').removeClass('error');
     newContactFieldWrap.siblings('.error-msg').removeClass('show');
@@ -2242,7 +2242,7 @@ define([
         .find(`.${templateName.replace('List', '')}`);
   
       $dropdownTemplateInput.val(templateDesc || 'No description').attr('data-id', templateId);
-      $list.hide();
+      $list.addClass('hidden-display').removeClass('block-display');
     });
   }
 
@@ -2299,7 +2299,7 @@ define([
   
       if (!response.ok) {
         $(inputSelector).css('border', '1px solid red');
-        $(errorSelector).text(`Invalid API key: ${apiKey}`).show();
+        $(errorSelector).text(`Invalid API key: ${apiKey}`).removeClass('hidden-display').addClass('block-display');
         return false;
       }
     } catch (error) {
@@ -2417,8 +2417,8 @@ define([
     var isSelfMailer = $('#self-mailer').is(':checked');
     if(isSelfMailer) {
       if($('#card-insert').is(':checked')) {
-        $('#extTempId').css('display','none');
-        $('label[for="extTempId"]').css('display','none');
+        $('#extTempId').addClass('hidden-display').removeClass('block-display');
+        $('label[for="extTempId"]').addClass('hidden-display').removeClass('block-display');
         $('#extTempId').prop('checked', false);
       } else {
         $('#extTempId').css('display','block');
@@ -2518,7 +2518,7 @@ define([
       }
     }
   
-    $dropdown.find('.dropdown-options').hide();
+    $dropdown.find('.dropdown-options').addClass('hidden-display').removeClass('block-display');
   });  
 
   $('#search-contact').on('input', debounce(function () {
@@ -2526,7 +2526,7 @@ define([
     if (searchQuery.length > 1) {
       fetchContacts(searchQuery);
     } else {
-      $('#dropdown-options').empty().hide();
+      $('#dropdown-options').empty().addClass('hidden-display').removeClass('block-display');
     }
     if ($(this).val().trim() === '') {
       $(this).blur();
@@ -2537,7 +2537,7 @@ define([
     const contact = $(this).data('contact');
     var contactValue = contact.firstName ? contact.firstName : contact.companyName;
     $('#search-contact').val(contactValue);
-    $('#dropdown-options').hide();
+    $('#dropdown-options').addClass('hidden-display').removeClass('block-display');
     fromContact.id = contact.id;
     fromContact.name = contactValue;
   });
@@ -2548,7 +2548,7 @@ define([
       if (searchQuery === '' && $('#dropdown-options div').length === 0) {
         fetchContacts();
       } else {
-        $('#dropdown-options').show();
+        $('#dropdown-options').removeClass('hidden-display').addClass('block-display');
       }
     }
   });
@@ -2561,19 +2561,19 @@ define([
     const $companyAsterisk = $('.mapping-fields-group label[for="companyName"] .asterisk');
   
     if (firstName === 'Select' && companyName === 'Select') {
-      $firstAsterisk.show();
-      $companyAsterisk.show();
+      $firstAsterisk.removeClass('hidden-display').addClass('block-display');
+      $companyAsterisk.removeClass('hidden-display').addClass('block-display');
     } else if (firstName !== 'Select' && companyName === 'Select') {
-      $firstAsterisk.show();
-      $companyAsterisk.hide();
+      $firstAsterisk.removeClass('hidden-display').addClass('block-display');
+      $companyAsterisk.addClass('hidden-display').removeClass('block-display');
     } else if (companyName !== 'Select' && firstName === 'Select') {
-      $firstAsterisk.hide();
-      $companyAsterisk.show();
+      $firstAsterisk.addClass('hidden-display').removeClass('block-display');
+      $companyAsterisk.removeClass('hidden-display').addClass('block-display');
     }
   });
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('focus', function () {
-    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
+    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').removeClass('hidden-display').addClass('block-display');
   });
 
   $('#front-template-input, #back-template-input, #selfMailer-insideTemplateInput, #selfMailer-outsideTemplateInput, #letter-template-input').on('input', debounce(function () {
@@ -2582,14 +2582,14 @@ define([
   }, 300));
 
   $(document).on('focus', '.template-input', function () {
-    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').show();
+    $(this).closest('.template-dropdown-wrap').next('.dropdown-options').removeClass('hidden-display').addClass('block-display');
   });
 
   $(document).on('blur', '.template-input', function () {
     const $input = $(this);
     const $dropdown = $input.closest('.template-dropdown-wrap').siblings('.dropdown-options');
 
-    $dropdown.hide();
+    $dropdown.addClass('hidden-display').removeClass('block-display');
   });
   
   $(document).on('input', '.template-input', debounce(function () {
@@ -2598,7 +2598,7 @@ define([
   }, 300));
 
   $(document).on('focus', '.return-envelope-input', function () {
-    $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').show();
+    $(this).closest('.return-envelope-dropdown-wrap').next('.dropdown-options').removeClass('hidden-display').addClass('block-display');
   });
 
   $(document).on('input', '.return-envelope-input', debounce(function () {
@@ -2620,11 +2620,11 @@ define([
       $('.test-to-live-switch')
         .on('mouseenter', function () {
           if ($liveModeToggle.prop('disabled')) {
-            $errorMessage.show();
+            $errorMessage.removeClass('hidden-display').addClass('block-display');
           }
         })
         .on('mouseleave', function () {
-          $errorMessage.hide();
+          $errorMessage.addClass('hidden-display').removeClass('block-display');
         });
   
       $liveModeToggle.on('change', function () {
@@ -2654,14 +2654,14 @@ define([
       const companyName = $('#newContactCompanyName').val().trim();
 
       if(firstName === '' && companyName === '') {
-        $('label[for="newContactCompanyName"] .asterisk').show();
-        $('label[for="newContactFirstName"] .asterisk').show();
+        $('label[for="newContactCompanyName"] .asterisk').removeClass('hidden-display').addClass('block-display');
+        $('label[for="newContactFirstName"] .asterisk').removeClass('hidden-display').addClass('block-display');
       } else if (firstName !== '' && companyName === '') {
-        $('label[for="newContactCompanyName"] .asterisk').hide();
-        $('label[for="newContactFirstName"] .asterisk').show();
+        $('label[for="newContactCompanyName"] .asterisk').addClass('hidden-display').removeClass('block-display');
+        $('label[for="newContactFirstName"] .asterisk').removeClass('hidden-display').addClass('block-display');
       } else if (companyName !== '' && firstName === '') {
-        $('label[for="newContactFirstName"] .asterisk').hide();
-        $('label[for="newContactCompanyName"] .asterisk').show();
+        $('label[for="newContactFirstName"] .asterisk').addClass('hidden-display').removeClass('block-display');
+        $('label[for="newContactCompanyName"] .asterisk').removeClass('hidden-display').addClass('block-display');
       }
     }
 
@@ -2695,36 +2695,36 @@ define([
       const isClickInsideFrontSelfMailer = $(event.target).closest('#selfMailer-insideTemplateList, #selfMailer-insideTemplateInput').length > 0;
       const isClickInsideBackSelfMailer = $(event.target).closest('#selfMailer-outsideTemplateList, #selfMailer-outsideTemplateInput').length > 0;
       if (!isClickInsideDropdown) {
-        $('#dropdown-options').hide();
+        $('#dropdown-options').addClass('hidden-display').removeClass('block-display');
       }
       if (!isClickInsideFront) {
         if(selectedMessageType !== 'LettersCardInsert'){
-          $(`.${selectedMessageType} .${selectedCreationType} #frontTemplateList`).hide();
+          $(`.${selectedMessageType} .${selectedCreationType} #frontTemplateList`).addClass('hidden-display').removeClass('block-display');
         }
       }
       if (!isClickInsideBack) {
         if(selectedMessageType !== 'LettersCardInsert'){
-          $(`.${selectedMessageType} .${selectedCreationType} #backTemplateList`).hide();
+          $(`.${selectedMessageType} .${selectedCreationType} #backTemplateList`).addClass('hidden-display').removeClass('block-display');
         }
       }
       if (!isClickInsideReturnEnvelope) {
-        $(`.${selectedMessageType} .${selectedCreationType} #returnEnvelopeList`).hide();
+        $(`.${selectedMessageType} .${selectedCreationType} #returnEnvelopeList`).addClass('hidden-display').removeClass('block-display');
       }
       if(!isClickInsideFrontSelfMailer){
-        $('#selfMailer-insideTemplateList').hide();
+        $('#selfMailer-insideTemplateList').addClass('hidden-display').removeClass('block-display');
       }
       if(!isClickInsideBackSelfMailer){
-        $('#selfMailer-outsideTemplateList').hide();
+        $('#selfMailer-outsideTemplateList').addClass('hidden-display').removeClass('block-display');
       }
 
       if (!$(event.target).closest('.extra-service-dropdown-wrap').length) {
         if($(`.${selectedMessageType} .${selectedCreationType} .extra-service-list`).css('display') === 'block') {
-          $(`.${selectedMessageType} .${selectedCreationType} .extra-service-list`).css('display','none');
+          $(`.${selectedMessageType} .${selectedCreationType} .extra-service-list`).addClass('hidden-display').removeClass('block-display');
         }
       }
       if (!$(event.target).closest('.envelope-type-dropdown-wrap').length) {
         if($(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list`).css('display') === 'block') {
-          $(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list`).css('display','none');
+          $(`.${selectedMessageType} .${selectedCreationType} .envelope-type-list`).addClass('hidden-display').removeClass('block-display');
         }
       }
     });
