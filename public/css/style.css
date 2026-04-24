@@ -29,6 +29,18 @@ span.block-display, i.block-display, a.block-display, button.block-display, labe
     color: red !important;
 }
 
+.error-border {
+    border: 1px solid red !important;
+}
+
+.inline-block-display {
+    display: inline-block !important;
+}
+
+.text-muted {
+    color: gray !important;
+}
+
 .preview-iframe {
     border: 1px solid #ccc; 
     width: 100%; 

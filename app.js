@@ -44,10 +44,7 @@ app.use(
           'https://*.marketingcloudapps.com',
           'https://*.exacttarget.com',
           'https://*.postgrid.com',
-          'https://*.salesforce.com',
-          'https://code.jquery.com',
-          'https://cdnjs.cloudflare.com',
-          'https://cdn.jsdelivr.net'
+          'https://*.salesforce.com'
         ],
 
         // Styles from trusted domains only (unsafe-inline removed for ZAP compliance)
@@ -90,7 +87,7 @@ app.use(
           'https://*.amazonaws.com'
         ],
 
-        fontSrc: ['\'self\'', 'https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com'],
+        fontSrc: ['\'self\''],
         objectSrc: ['\'none\''],
         baseUri: ['\'self\''],
         workerSrc: ['\'none\''],

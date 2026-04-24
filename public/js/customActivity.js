@@ -795,23 +795,23 @@ define([
     const regexForLiveApiKey = /^live_sk_[a-zA-Z0-9]{16,}$/;
 
     if (testApiKey === '') {
-      $('#test-api-key').css('border', '1px solid red');
+      $('#test-api-key').addClass('error-border');
       $('#test-api-key-error').text('Missing or invalid authentication').removeClass('hidden-display').addClass('block-display');
       isValid = false;
     } else if (!regexForTestApiKey.test(testApiKey)) {
-      $('#test-api-key').css('border', '1px solid red');
+      $('#test-api-key').addClass('error-border');
       $('#test-api-key-error').text(`Invalid API key: ${testApiKey}`).removeClass('hidden-display').addClass('block-display');
       isValid = false;
     } else {
       previewPayload.test_api_key = testApiKey;
       $('#test-api-key-error').addClass('hidden-display').removeClass('block-display');
-      $('#test-api-key').css('border', '');
+      $('#test-api-key').removeClass('error-border');
     }
 
     previewPayload.live_api_key = liveApiKey;
     if (liveApiKey !== '') {
       if (!regexForLiveApiKey.test(liveApiKey)) {
-        $('#live-api-key').css('border', '1px solid red');
+        $('#live-api-key').addClass('error-border');
         $('#live-api-key-error').text(`Invalid API key: ${liveApiKey}`).removeClass('hidden-display').addClass('block-display');
         isValid = false;
         previewPayload.live_api_key = '';
@@ -821,7 +821,7 @@ define([
   }
   
   function hideError() {
-    $(this).css('border', '').siblings('.error-message').addClass('hidden-display').removeClass('block-display');
+    $(this).removeClass('error-border').siblings('.error-message').addClass('hidden-display').removeClass('block-display');
   }
 
   function validateStep2() {
@@ -901,8 +901,8 @@ define([
       } else {
         $('#card-insert-type').addClass('hidden');
         $('.card-insert-creation-type-wrapper').addClass('hidden');
-        $('#extTempId').css('display','block');
-        $('label[for="extTempId"]').css('display','block');
+        $('#extTempId').removeClass('hidden-display').addClass('block-display');
+        $('label[for="extTempId"]').removeClass('hidden-display').addClass('block-display');
       }
     });
   }
@@ -1843,7 +1843,7 @@ define([
       if (pdfUrl) {
         previewPayload.previewURL = pdfUrl;
         $('.preview-message').html('<div>Review your mail piece before sending!</div><div>Click the button below to check the preview.</div>');
-        $('.retry-preview-btn, .preview-message').css('display', 'inline-block');
+        $('.retry-preview-btn, .preview-message').removeClass('hidden-display').addClass('inline-block-display');
         $('.retry-preview-btn').text('Show Preview');
         $('.retry-btn-wrap .loader').removeClass('show');
   
@@ -2087,12 +2087,12 @@ define([
       let value = $(selector).val();
       if (selector === '#firstName' || selector === '#companyName') {
         if ($('#firstName').val() === 'Select' && $('#companyName').val() === 'Select') {
-          $('#firstName, #companyName').css('border', '1px solid red');
+          $('#firstName, #companyName').addClass('error-border');
           isAnyFieldEmpty = true;
         }
       } else {
         if (value === 'Select') {
-          $(selector).css('border', '1px solid red');
+          $(selector).addClass('error-border');
           isAnyFieldEmpty = true;
         }
       }
@@ -2110,7 +2110,7 @@ define([
     $('.contact-dropdown-container .error-msg').removeClass('show');
     $('.error-toast-wrap').removeClass('show');
     $('.error-toast-message').text('');
-    $('.mapping-fields-group select').css('border', '');
+    $('.mapping-fields-group select').removeClass('error-border');
     $('.error-message-contact-mapping').text('').addClass('hidden-display').removeClass('block-display');
     const newContactFieldWrap = $('.sender-contact-container .create-contact .mapping-fields');
     newContactFieldWrap.find('input').removeClass('error');
@@ -2298,7 +2298,7 @@ define([
       });
   
       if (!response.ok) {
-        $(inputSelector).css('border', '1px solid red');
+        $(inputSelector).addClass('error-border');
         $(errorSelector).text(`Invalid API key: ${apiKey}`).removeClass('hidden-display').addClass('block-display');
         return false;
       }
@@ -2361,7 +2361,7 @@ define([
           });
           $('.loader-overlay').removeClass('show');
           $('.activity-loader').removeClass('show');
-          $('body').css('overflow', '');
+          
         }
       })
       .catch((error) => {
@@ -2421,12 +2421,12 @@ define([
         $('label[for="extTempId"]').addClass('hidden-display').removeClass('block-display');
         $('#extTempId').prop('checked', false);
       } else {
-        $('#extTempId').css('display','block');
-        $('label[for="extTempId"]').css('display','block');
+        $('#extTempId').removeClass('hidden-display').addClass('block-display');
+        $('label[for="extTempId"]').removeClass('hidden-display').addClass('block-display');
       }
     } else {
-      $('#extTempId').css('display','block');
-      $('label[for="extTempId"]').css('display','block');
+      $('#extTempId').removeClass('hidden-display').addClass('block-display');
+      $('label[for="extTempId"]').removeClass('hidden-display').addClass('block-display');
     }
 
     connection.trigger('updateButton', {
@@ -2446,11 +2446,11 @@ define([
 
     if (isChecked) {
       mailingClass.prop('disabled', true);
-      extraService.prop('disabled', true).css('color','gray');
+      extraService.prop('disabled', true).addClass('text-muted');
     } else {
       mailingClass.prop('disabled', false);
-      let color = extraService.val() === 'Select Extra Service' ? 'gray' : 'black' ;
-      extraService.prop('disabled', false).css('color',color);
+      let isDisabled = extraService.val() === 'Select Extra Service';
+      extraService.prop('disabled', false).toggleClass('text-muted', isDisabled);
     }
   });
 
@@ -2502,19 +2502,19 @@ define([
     $input.val(selectedText).attr('data-id', selectedValue);
   
     if (selectedValue === '') {
-      $input.css('color', 'grey');
+      $input.addClass('text-muted');
     } else {
-      $input.css('color', 'black');
+      $input.removeClass('text-muted');
     }
   
     if (inputType === 'extra-service') {
       const $expressDelivery = $spacer.find('.express-delivery-input');
       if (selectedValue === '') {
         $expressDelivery.prop('disabled', false);
-        $expressDelivery.siblings('span').css('color', 'black');
+        $expressDelivery.siblings('span').removeClass('text-muted');
       } else {
         $expressDelivery.prop('disabled', true);
-        $expressDelivery.siblings('span').css('color', 'gray');
+        $expressDelivery.siblings('span').addClass('text-muted');
       }
     }
   
