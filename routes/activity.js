@@ -1,5 +1,4 @@
 'use strict';
-/* eslint-disable no-console */
 const axios = require('axios');
 
 /**
@@ -240,16 +239,8 @@ async function getAuthToken(payloadData){
       client_secret: payloadData.clientSecret
     }
   };
-  let response;
-  try {
-    console.log(`[SFMC Auth] Requesting token for client_id: ${payloadData.clientId} from https://${payloadData.authTSSD}.auth.marketingcloudapis.com/v2/token`);
-    response = await axios.request(authTokenPayload);
-    console.log('[SFMC Auth] Token retrieved successfully.');
-    return response.data.access_token;
-  } catch (error) {
-    console.error('[SFMC Auth Error] Failed to get token:', error.response ? JSON.stringify(error.response.data) : error.message);
-    throw error;
-  }
+  let response = await axios.request(authTokenPayload);
+  return response.data.access_token;
 }
 
 /**
@@ -286,14 +277,5 @@ async function logToDataExtension(requestData) {
     data: payload
   };
 
-  try {
-    console.log(`[SFMC Logging] Inserting row into DE Key: ${logDEKey} for ContactKey: ${requestData.contactKey}`);
-    const response = await axios.request(config);
-    console.log(`[SFMC Logging] Successfully inserted row into DE Key: ${logDEKey}`);
-    return response;
-  } catch (error) {
-    console.error(`[SFMC Logging Error] Failed to insert row into DE Key: ${logDEKey}`, error.response ? JSON.stringify(error.response.data) : error.message);
-    // Swallowing the error to prevent UnhandledPromiseRejection, as logging is fire-and-forget
-    return null;
-  }
+  return axios.request(config);
 }
