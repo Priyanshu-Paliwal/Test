@@ -2055,7 +2055,7 @@ define([
     }
 
     resetToContactMappingErrors();
-    if(selectedSenderContactType === 'existing-contact' && selectedMessageType !== 'Postcards'){
+    if(selectedSenderContactType === 'existing-contact'){
       isValid = validateInputField(fromContactElement) ? isValid : false ;
     } else if(selectedSenderContactType === 'create-contact'){
       const firstName = $('#newContactFirstName').val().trim();
